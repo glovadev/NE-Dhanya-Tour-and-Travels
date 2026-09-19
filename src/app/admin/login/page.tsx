@@ -7,8 +7,8 @@ import { ShieldCheck, Lock, Mail, ArrowRight } from "lucide-react";
 import { useAuth } from "@/lib/firebase/authContext";
 
 export default function AdminLoginPage() {
-  const [email, setEmail] = useState("admin@nedhanyatours.com");
-  const [password, setPassword] = useState("admin123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { login } = useAuth();

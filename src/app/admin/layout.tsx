@@ -17,7 +17,8 @@ import {
   ExternalLink,
   Menu,
   X,
-  ShieldCheck
+  ShieldCheck,
+  Star
 } from "lucide-react";
 import { AuthProvider, useAuth } from "@/lib/firebase/authContext";
 
@@ -52,6 +53,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
     { label: "Vehicle Fleet", href: "/admin/vehicles", icon: <Car className="w-4 h-4" /> },
     { label: "Blog & SEO Guides", href: "/admin/blog", icon: <BookOpen className="w-4 h-4" /> },
     { label: "Customer Enquiries", href: "/admin/enquiries", icon: <MessageSquare className="w-4 h-4" /> },
+    { label: "Reviews & Ratings", href: "/admin/reviews", icon: <Star className="w-4 h-4" /> },
     { label: "Website Settings", href: "/admin/settings", icon: <Settings className="w-4 h-4" /> },
   ];
 

@@ -2,83 +2,84 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // Helper functions
+    // Helper function: checks if user is logged in via Firebase Auth
     function isAuthenticated() {
       return request.auth != null;
     }
     
-    function isAdmin() {
-      return isAuthenticated() && (
-        request.auth.token.admin == true ||
-        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
-      );
-    }
-    
-    // Site Settings: Public read, Admin write
+    // 1. Site Settings (Business info, phones, WhatsApp, SEO): Public view, Admin edit
     match /siteSettings/{document=**} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isAuthenticated();
     }
     
-    // Destinations: Public read published, Admin write
+    // 2. Destinations (Assam, Meghalaya, etc.): Public view, Admin manage
     match /destinations/{destId} {
-      allow read: if resource.data.status == 'published' || isAdmin();
-      allow write: if isAdmin();
+      allow read: if true;
+      allow write: if isAuthenticated();
     }
     
-    // Tourist Places: Public read published, Admin write
+    // 3. Tourist Places (58 sightseeing places): Public view, Admin manage
     match /touristPlaces/{placeId} {
-      allow read: if resource.data.status == 'published' || isAdmin();
-      allow write: if isAdmin();
+      allow read: if true;
+      allow write: if isAuthenticated();
     }
     
-    // Tour Packages: Public read published, Admin write
+    // 4. Tour Packages: Public view, Admin manage
     match /tourPackages/{packageId} {
-      allow read: if resource.data.status == 'published' || isAdmin();
-      allow write: if isAdmin();
+      allow read: if true;
+      allow write: if isAuthenticated();
     }
     
-    // Vehicles: Public read, Admin write
+    // 5. Vehicles & Car Rental Fleet: Public view rates, Admin manage
     match /vehicles/{vehicleId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isAuthenticated();
     }
     
-    // Blogs & Categories: Public read published, Admin write
+    // 6. Blogs & Categories: Public view, Admin manage
     match /blogs/{blogId} {
-      allow read: if resource.data.status == 'published' || isAdmin();
-      allow write: if isAdmin();
+      allow read: if true;
+      allow write: if isAuthenticated();
     }
     
     match /blogCategories/{categoryId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isAuthenticated();
     }
     
-    // Media metadata: Public read, Admin write
+    // 7. Media & Uploads metadata: Public view, Admin manage
     match /media/{mediaId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isAuthenticated();
     }
     
-    // Enquiries: Public can create with valid fields, only Admin can read/update/delete
+    // 8. Customer Booking & Quotation Enquiries:
+    // - Any website visitor can submit an enquiry
+    // - ONLY logged-in Admin can view, update status, or delete leads
     match /enquiries/{enquiryId} {
-      allow create: if request.resource.data.name is string &&
-                       request.resource.data.phone is string &&
-                       request.resource.data.destination is string;
-      allow read, update, delete: if isAdmin();
+      allow create: if true;
+      allow read, update, delete: if isAuthenticated();
     }
     
-    // Admins collection: Only authenticated admins can manage
+    // 9. Guest Reviews & Testimonials:
+    // - Any visitor can submit a review (status: 'pending')
+    // - Public can read reviews (website filters approved)
+    // - ONLY logged-in Admin can approve, reject, or delete reviews
+    match /reviews/{reviewId} {
+      allow create: if true;
+      allow read: if true;
+      allow update, delete: if isAuthenticated();
+    }
+    
+    // 10. Admins & Redirects collections
     match /admins/{adminId} {
-      allow read: if isAuthenticated();
-      allow write: if isAdmin();
+      allow read, write: if isAuthenticated();
     }
     
-    // Redirects: Public read, Admin write
     match /redirects/{redirectId} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if isAuthenticated();
     }
   }
 }

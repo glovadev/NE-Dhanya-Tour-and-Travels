@@ -10,7 +10,8 @@ import {
   ArrowRight, 
   Plus, 
   Clock,
-  CheckCircle2
+  CheckCircle2,
+  Star
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { 
@@ -20,30 +21,33 @@ import {
   getAllVehicles, 
   getAllBlogPosts, 
   getAllEnquiries,
+  getAllReviews,
   getSiteSettings
 } from "@/lib/firebase/dataBridge";
 import { createWhatsAppLink } from "@/lib/whatsapp";
 
 export default async function AdminDashboardPage() {
-  const [destinations, places, packages, vehicles, blogs, enquiries, settings] = await Promise.all([
+  const [destinations, places, packages, vehicles, blogs, enquiries, reviews, settings] = await Promise.all([
     getAllDestinations(),
     getAllTouristPlaces(),
     getAllPackages(),
     getAllVehicles(),
     getAllBlogPosts(),
     getAllEnquiries(),
+    getAllReviews(),
     getSiteSettings()
   ]);
 
   const publishedBlogs = blogs.filter(b => b.status === 'published').length;
   const newEnquiries = enquiries.filter(e => e.status === 'new').length;
+  const pendingReviews = reviews.filter(r => r.status === 'pending').length;
 
   const statCards = [
     { title: "Tour Packages", count: packages.length, icon: <Package className="w-5 h-5 text-emerald-400" />, href: "/admin/packages" },
-    { title: "Destinations", count: destinations.length, icon: <Compass className="w-5 h-5 text-teal-400" />, href: "/admin/destinations" },
     { title: "Tourist Places", count: places.length, icon: <MapPin className="w-5 h-5 text-amber-400" />, href: "/admin/places" },
-    { title: "Published Blogs", count: publishedBlogs, icon: <BookOpen className="w-5 h-5 text-blue-400" />, href: "/admin/blog" },
     { title: "Vehicle Fleet", count: vehicles.length, icon: <Car className="w-5 h-5 text-purple-400" />, href: "/admin/vehicles" },
+    { title: "Guest Reviews", count: reviews.length, icon: <Star className="w-5 h-5 text-amber-400" />, href: "/admin/reviews", badge: pendingReviews > 0 ? `${pendingReviews} Pending` : undefined },
+    { title: "Published Blogs", count: publishedBlogs, icon: <BookOpen className="w-5 h-5 text-blue-400" />, href: "/admin/blog" },
     { title: "Total Enquiries", count: enquiries.length, icon: <MessageSquare className="w-5 h-5 text-rose-400" />, href: "/admin/enquiries", badge: newEnquiries > 0 ? `${newEnquiries} New` : undefined },
   ];
 

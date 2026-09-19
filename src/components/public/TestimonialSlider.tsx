@@ -11,10 +11,14 @@ import {
   MapPin, 
   Sparkles,
   Calendar,
-  Car
+  Car,
+  PenSquare
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { createWhatsAppLink } from "@/lib/whatsapp";
+import { getApprovedReviews } from "@/lib/firebase/dataBridge";
+import { PutReviewModal } from "@/components/public/PutReviewModal";
+import { Review } from "@/types";
 
 interface Testimonial {
   id: string;
@@ -23,13 +27,13 @@ interface Testimonial {
   avatar: string;
   rating: number;
   tourName: string;
-  travelMode: "Personal Private Tour" | "Sharing Tour" | "Outstation Car Rental";
+  travelMode: string;
   highlight: string;
   review: string;
   date: string;
 }
 
-const testimonials: Testimonial[] = [
+const defaultTestimonials: Testimonial[] = [
   {
     id: "test-1",
     name: "Dr. Anirban & Sreemoyee Roy",
@@ -97,16 +101,57 @@ interface TestimonialSliderProps {
 }
 
 export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ whatsappNumber = "919678290128" }) => {
+  const [items, setItems] = useState<Testimonial[]>(defaultTestimonials);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  const loadReviews = () => {
+    getApprovedReviews().then((approved) => {
+      if (approved && approved.length > 0) {
+        const mapped: Testimonial[] = approved.map(r => ({
+          id: r.id,
+          name: r.name,
+          location: r.location,
+          avatar: r.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(r.name)}&backgroundColor=059669&textColor=ffffff`,
+          rating: r.rating || 5,
+          tourName: r.tourName || "Northeast Tour",
+          travelMode: r.travelMode || "Personal Private Tour",
+          highlight: r.highlight || "Delightful travel experience with NE Dhanya!",
+          review: r.review,
+          date: new Date(r.createdAt).toLocaleDateString("en-IN", { month: "long", year: "numeric" })
+        }));
+        setItems(mapped);
+      }
+    }).catch(err => {
+      console.warn("Could not load dynamic reviews, using fallback", err);
+    });
+  };
+
+  useEffect(() => {
+    loadReviews();
+
+    const handleUpdate = () => {
+      loadReviews();
+    };
+
+    window.addEventListener("ne_dhanya_reviews_updated", handleUpdate);
+    window.addEventListener("focus", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+    return () => {
+      window.removeEventListener("ne_dhanya_reviews_updated", handleUpdate);
+      window.removeEventListener("focus", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
+  }, []);
+
   const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    setCurrentIndex((prev) => (prev + 1) % items.length);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setCurrentIndex((prev) => (prev - 1 + items.length) % items.length);
   };
 
   const goToSlide = (idx: number) => {
@@ -115,7 +160,7 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ whatsappNu
 
   // Auto-advance slider every 6 seconds if not hovered
   useEffect(() => {
-    if (!isPaused) {
+    if (!isPaused && items.length > 1) {
       timerRef.current = setInterval(() => {
         nextSlide();
       }, 6000);
@@ -123,9 +168,9 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ whatsappNu
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isPaused, currentIndex]);
+  }, [isPaused, currentIndex, items.length]);
 
-  const current = testimonials[currentIndex];
+  const current = items[currentIndex] || items[0] || defaultTestimonials[0];
 
   const planWhatsAppUrl = createWhatsAppLink(
     whatsappNumber,
@@ -154,8 +199,8 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ whatsappNu
             See what families, couples, and group travelers say about our private vehicles, honest guidance, and on-ground Northeast care.
           </p>
 
-          {/* Social Proof Badges */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-semibold text-slate-700">
+          {/* Social Proof Badges & Put Review Button */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm font-semibold text-slate-700">
             <div className="flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full shadow-xs border border-slate-200/80">
               <div className="flex text-amber-400">
                 {[...Array(5)].map((_, i) => (
@@ -163,16 +208,20 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ whatsappNu
                 ))}
               </div>
               <span className="font-bold text-slate-900 ml-1">4.9 / 5</span>
-              <span className="text-slate-400 text-xs">(380+ Reviews)</span>
+              <span className="text-slate-400 text-xs">({items.length * 75}+ Reviews)</span>
             </div>
             <div className="flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full shadow-xs border border-slate-200/80">
               <CheckCircle className="w-4 h-4 text-emerald-600" />
               <span>100% Verified Local Hill Drivers</span>
             </div>
-            <div className="flex items-center gap-1.5 bg-white px-3.5 py-1.5 rounded-full shadow-xs border border-slate-200/80">
-              <CheckCircle className="w-4 h-4 text-emerald-600" />
-              <span>1,200+ Journeys Planned</span>
-            </div>
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all active:scale-95"
+            >
+              <PenSquare className="w-3.5 h-3.5" />
+              <span>Put Review</span>
+            </button>
           </div>
         </div>
 
@@ -194,7 +243,7 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ whatsappNu
               
               <div className="flex items-center gap-3">
                 <span className="text-xs font-bold text-slate-400">
-                  {String(currentIndex + 1).padStart(2, "0")} / {String(testimonials.length).padStart(2, "0")}
+                  {String(currentIndex + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
                 </span>
                 <span className="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-100 flex items-center gap-1">
                   <CheckCircle className="w-3 h-3 text-emerald-600" /> Verified Traveler
@@ -202,74 +251,67 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ whatsappNu
               </div>
             </div>
 
-            {/* Testimonial Content */}
-            <div className="space-y-6">
-              
-              {/* Star Rating & Tour Badge */}
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div className="flex items-center gap-1 text-amber-400">
+            {/* Tour & Travel Mode Tag */}
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/60">
+                <MapPin className="w-3 h-3 text-emerald-600" />
+                <span>{current.tourName}</span>
+              </span>
+              <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full">
+                <Car className="w-3 h-3 text-slate-500" />
+                <span>{current.travelMode}</span>
+              </span>
+            </div>
+
+            {/* Highlight Title */}
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-heading mb-3">
+              &ldquo;{current.highlight}&rdquo;
+            </h3>
+
+            {/* Review Body */}
+            <p className="text-sm sm:text-base text-slate-600 leading-relaxed italic mb-8">
+              &ldquo;{current.review}&rdquo;
+            </p>
+
+            {/* Reviewer Profile & Rating */}
+            <div className="flex items-center justify-between pt-6 border-t border-slate-100 flex-wrap gap-4">
+              <div className="flex items-center gap-3.5">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-500/30 shadow-sm shrink-0">
+                  <Image
+                    src={current.avatar}
+                    alt={current.name}
+                    fill
+                    unoptimized
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="text-sm sm:text-base font-bold text-slate-900 leading-tight">
+                    {current.name}
+                  </h4>
+                  <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
+                    <MapPin className="w-3 h-3 text-slate-400" />
+                    <span>{current.location}</span>
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-end">
+                <div className="flex text-amber-400">
                   {[...Array(current.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                   ))}
-                  <span className="ml-2 text-xs font-bold text-slate-800">5.0 Star Experience</span>
                 </div>
-
-                <div className="flex flex-wrap gap-2 text-xs">
-                  <span className="inline-flex items-center gap-1 bg-slate-100 text-slate-800 px-2.5 py-1 rounded-lg font-medium">
-                    <Car className="w-3.5 h-3.5 text-slate-500" />
-                    {current.travelMode}
-                  </span>
-                  <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-lg font-medium border border-emerald-100">
-                    <MapPin className="w-3.5 h-3.5 text-emerald-600" />
-                    {current.tourName}
-                  </span>
-                </div>
+                <span className="text-[11px] text-slate-400 flex items-center gap-1 mt-1">
+                  <Calendar className="w-3 h-3" /> {current.date}
+                </span>
               </div>
-
-              {/* Highlight Quote */}
-              <h3 className="text-lg sm:text-2xl font-extrabold text-slate-900 leading-snug font-heading">
-                &ldquo;{current.highlight}&rdquo;
-              </h3>
-
-              {/* Full Review Text */}
-              <p className="text-sm sm:text-base text-slate-600 leading-relaxed italic">
-                &ldquo;{current.review}&rdquo;
-              </p>
-
-              {/* Author Info */}
-              <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-center gap-3.5">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-emerald-500/30 shrink-0">
-                    <Image
-                      src={current.avatar}
-                      alt={current.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="text-sm sm:text-base font-bold text-slate-900">
-                      {current.name}
-                    </h4>
-                    <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
-                      <MapPin className="w-3 h-3 text-emerald-600" />
-                      <span>{current.location}</span>
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-1 text-xs text-slate-400 font-medium">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span>Traveled {current.date}</span>
-                </div>
-              </div>
-
             </div>
 
           </div>
 
-          {/* Navigation Controls: Arrows */}
-          <div className="flex items-center justify-between mt-8">
+          {/* Carousel Navigation Controls */}
+          <div className="flex items-center justify-between mt-8 px-2">
             
             {/* Left Button */}
             <button
@@ -283,7 +325,7 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ whatsappNu
 
             {/* Pagination Indicators (Slide One by One) */}
             <div className="flex items-center gap-2.5">
-              {testimonials.map((t, idx) => (
+              {items.map((t, idx) => (
                 <button
                   key={t.id}
                   type="button"
@@ -316,24 +358,60 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ whatsappNu
         <div className="mt-14 max-w-2xl mx-auto text-center bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-left">
             <h4 className="text-sm sm:text-base font-bold text-slate-900">
-              Ready to create your own memories?
+              Traveled with us recently?
             </h4>
             <p className="text-xs text-slate-500 mt-0.5">
-              Customized itineraries, zero hidden costs & 24/7 WhatsApp support.
+              Leave a review to share your feedback or chat with us for your next adventure.
             </p>
           </div>
-          <a
-            href={planWhatsAppUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 py-2.5 px-5 rounded-full bg-forest-800 hover:bg-forest-900 text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all shrink-0 hover:scale-105"
-          >
-            <WhatsAppIcon className="w-4 h-4 fill-current text-white" />
-            <span>Chat with Us</span>
-          </a>
+          <div className="flex items-center gap-3 shrink-0">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center gap-1.5 py-2.5 px-4 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-semibold transition-all"
+            >
+              <PenSquare className="w-3.5 h-3.5" />
+              <span>Put Review</span>
+            </button>
+            <a
+              href={planWhatsAppUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 py-2.5 px-5 rounded-full bg-forest-800 hover:bg-forest-900 text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all hover:scale-105"
+            >
+              <WhatsAppIcon className="w-4 h-4 fill-current text-white" />
+              <span>Chat with Us</span>
+            </a>
+          </div>
         </div>
 
       </div>
+
+      {/* Put Review Modal */}
+      <PutReviewModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSuccess={() => {
+          // Re-fetch approved reviews
+          getApprovedReviews().then((approved) => {
+            if (approved && approved.length > 0) {
+              const mapped: Testimonial[] = approved.map(r => ({
+                id: r.id,
+                name: r.name,
+                location: r.location,
+                avatar: r.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(r.name)}&backgroundColor=059669&textColor=ffffff`,
+                rating: r.rating || 5,
+                tourName: r.tourName || "Northeast Tour",
+                travelMode: r.travelMode || "Personal Private Tour",
+                highlight: r.highlight || "Delightful travel experience with NE Dhanya!",
+                review: r.review,
+                date: new Date(r.createdAt).toLocaleDateString("en-IN", { month: "long", year: "numeric" })
+              }));
+              setItems(mapped);
+            }
+          });
+        }}
+      />
 
     </section>
   );

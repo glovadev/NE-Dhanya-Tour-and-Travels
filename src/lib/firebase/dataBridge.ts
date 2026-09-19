@@ -6,7 +6,8 @@ import {
   BlogPost, 
   BlogCategory, 
   SiteSettings, 
-  Enquiry 
+  Enquiry,
+  Review 
 } from '@/types';
 import { 
   initialDestinations, 
@@ -15,7 +16,8 @@ import {
   initialTourPackages, 
   initialBlogPosts, 
   initialBlogCategories, 
-  initialSiteSettings 
+  initialSiteSettings,
+  initialReviews 
 } from '@/data/seedData';
 import { db, isFirebaseConfigured } from './config';
 import { 
@@ -25,7 +27,8 @@ import {
   getDoc, 
   setDoc, 
   addDoc, 
-  updateDoc, 
+  updateDoc,
+  deleteDoc, 
   query, 
   where 
 } from 'firebase/firestore';
@@ -38,6 +41,7 @@ let localPackages: TourPackage[] = [...initialTourPackages];
 let localVehicles: Vehicle[] = [...initialVehicles];
 let localBlogs: BlogPost[] = [...initialBlogPosts];
 let localCategories: BlogCategory[] = [...initialBlogCategories];
+let localReviews: Review[] = [...initialReviews];
 let localEnquiries: Enquiry[] = [
   {
     id: "enq-demo-1",
@@ -347,6 +351,155 @@ export async function updateEnquiryStatus(id: string, status: Enquiry['status'])
     } catch (e) {
       console.error("Failed updating enquiry status in Firestore", e);
       return false;
+    }
+  }
+  return true;
+}
+
+// REVIEWS & TESTIMONIALS
+const REVIEWS_STORAGE_KEY = 'ne_dhanya_reviews_cache';
+
+function getStoredLocalReviews(): Review[] {
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem(REVIEWS_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn("Could not parse local reviews cache", e);
+    }
+  }
+  return [...initialReviews];
+}
+
+function saveStoredLocalReviews(reviews: Review[]) {
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem(REVIEWS_STORAGE_KEY, JSON.stringify(reviews));
+      window.dispatchEvent(new Event('ne_dhanya_reviews_updated'));
+    } catch (e) {
+      console.warn("Could not save to local reviews cache", e);
+    }
+  }
+}
+
+export async function getAllReviews(): Promise<Review[]> {
+  const local = getStoredLocalReviews();
+
+  if (isFirebaseConfigured && db) {
+    try {
+      const snap = await getDocs(collection(db, 'reviews'));
+      if (!snap.empty) {
+        const firestoreReviews = snap.docs.map(d => {
+          const data = d.data();
+          return {
+            ...data,
+            id: data.id || d.id
+          } as Review;
+        });
+
+        // Merge: Never let older Firestore data overwrite a locally approved review
+        const merged = firestoreReviews.map(fr => {
+          const localMatch = local.find(lr => lr.id === fr.id);
+          if (localMatch && localMatch.status === 'approved' && fr.status !== 'approved') {
+            return { ...fr, status: 'approved' as const };
+          }
+          return fr;
+        });
+
+        const firestoreIds = new Set(merged.map(r => r.id));
+        const localOnly = local.filter(r => !firestoreIds.has(r.id));
+        const finalReviews = [...localOnly, ...merged];
+
+        saveStoredLocalReviews(finalReviews);
+        localReviews = finalReviews;
+        return finalReviews;
+      }
+    } catch (e) {
+      console.warn("Failed fetching reviews from Firestore, using persistent local fallback", e);
+    }
+  }
+
+  localReviews = local;
+  return local;
+}
+
+export async function getApprovedReviews(): Promise<Review[]> {
+  const all = await getAllReviews();
+  return all.filter(r => r.status === 'approved');
+}
+
+export async function submitReview(reviewData: Omit<Review, 'id' | 'createdAt' | 'status'>): Promise<{ success: boolean; id: string }> {
+  const newReview: Review = {
+    ...reviewData,
+    id: `rev-${Date.now()}`,
+    status: 'pending',
+    createdAt: new Date().toISOString()
+  };
+
+  // 1. Save to persistent local storage immediately
+  const current = getStoredLocalReviews();
+  current.unshift(newReview);
+  saveStoredLocalReviews(current);
+  localReviews = current;
+
+  // 2. Save to Firestore with explicit document ID so it matches perfectly
+  if (isFirebaseConfigured && db) {
+    try {
+      await setDoc(doc(db, 'reviews', newReview.id), newReview, { merge: true });
+      return { success: true, id: newReview.id };
+    } catch (e) {
+      console.error("Failed storing review in Firestore (saved locally)", e);
+    }
+  }
+  return { success: true, id: newReview.id };
+}
+
+export async function updateReviewStatus(id: string, status: Review['status']): Promise<boolean> {
+  // 1. Update in local storage immediately
+  const current = getStoredLocalReviews();
+  const item = current.find(r => r.id === id);
+  if (item) {
+    item.status = status;
+    saveStoredLocalReviews(current);
+    localReviews = current;
+  }
+
+  // 2. Update in Firestore
+  if (isFirebaseConfigured && db) {
+    try {
+      // First try direct document key update
+      await setDoc(doc(db, 'reviews', id), { status }, { merge: true });
+    } catch (e) {
+      console.warn("Direct doc update failed, trying query by id field", e);
+      try {
+        const q = query(collection(db, 'reviews'), where('id', '==', id));
+        const qSnap = await getDocs(q);
+        for (const d of qSnap.docs) {
+          await updateDoc(d.ref, { status });
+        }
+      } catch (err2) {
+        console.error("Failed updating review status in Firestore", err2);
+      }
+    }
+  }
+  return true;
+}
+
+export async function deleteReview(id: string): Promise<boolean> {
+  const current = getStoredLocalReviews().filter(r => r.id !== id);
+  saveStoredLocalReviews(current);
+  localReviews = current;
+
+  if (isFirebaseConfigured && db) {
+    try {
+      await deleteDoc(doc(db, 'reviews', id));
+    } catch (e) {
+      console.error("Failed deleting review in Firestore", e);
     }
   }
   return true;

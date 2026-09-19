@@ -208,3 +208,17 @@ export interface MediaItem {
   uploadedBy?: string;
   createdAt: string;
 }
+
+export interface Review {
+  id: string;
+  name: string;
+  location: string;
+  avatar?: string;
+  rating: number;
+  tourName: string;
+  travelMode?: string;
+  highlight?: string;
+  review: string;
+  status: 'pending' | 'approved' | 'rejected';
+  createdAt: string;
+}

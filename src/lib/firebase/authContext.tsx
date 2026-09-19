@@ -31,56 +31,63 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check local session storage for mock admin mode
-    const stored = typeof window !== "undefined" ? localStorage.getItem("ne_dhanya_admin_session") : null;
-    if (stored) {
-      try {
-        setUser(JSON.parse(stored));
-      } catch (e) {
-        // ignore
-      }
-    }
-
     if (isFirebaseConfigured && auth) {
       const unsub = onAuthStateChanged(auth, (fbUser) => {
         if (fbUser) {
           const adminObj = {
-            email: fbUser.email || "admin@nedhanyatours.com",
-            displayName: fbUser.displayName || "Admin User",
+            email: fbUser.email || "",
+            displayName: fbUser.displayName || fbUser.email?.split("@")[0].toUpperCase() || "Admin",
             role: "super-admin" as AdminRole,
           };
           setUser(adminObj);
+        } else {
+          setUser(null);
           if (typeof window !== "undefined") {
-            localStorage.setItem("ne_dhanya_admin_session", JSON.stringify(adminObj));
+            localStorage.removeItem("ne_dhanya_admin_session");
           }
         }
         setLoading(false);
       });
       return () => unsub();
     } else {
+      // Offline / fallback dev mode only when Firebase is not configured
+      const stored = typeof window !== "undefined" ? localStorage.getItem("ne_dhanya_admin_session") : null;
+      if (stored) {
+        try {
+          setUser(JSON.parse(stored));
+        } catch (e) {
+          // ignore
+        }
+      }
       setLoading(false);
     }
   }, []);
 
   const login = async (email: string, pass: string) => {
-    // If Firebase configured, try Firebase Auth
+    // If Firebase is configured, strictly authenticate through Firebase Auth
     if (isFirebaseConfigured && auth) {
       try {
-        const cred = await signInWithEmailAndPassword(auth, email, pass);
+        const cred = await signInWithEmailAndPassword(auth, email.trim(), pass);
         const adminObj = {
-          email: cred.user.email || email,
-          displayName: cred.user.displayName || "Admin User",
+          email: cred.user.email || email.trim(),
+          displayName: cred.user.displayName || cred.user.email?.split("@")[0].toUpperCase() || "Admin",
           role: "super-admin" as AdminRole,
         };
         setUser(adminObj);
-        localStorage.setItem("ne_dhanya_admin_session", JSON.stringify(adminObj));
         return { success: true };
       } catch (err: any) {
-        return { success: false, error: err.message || "Failed to sign in" };
+        console.error("Firebase sign in error:", err);
+        let errorMsg = err.message || "Failed to sign in";
+        if (err.code === "auth/invalid-credential" || err.code === "auth/user-not-found" || err.code === "auth/wrong-password") {
+          errorMsg = "Invalid email or password. Please verify the user exists in your Firebase Console (Authentication > Users).";
+        } else if (err.code === "auth/too-many-requests") {
+          errorMsg = "Access temporarily disabled due to many failed attempts. Reset your password or try again later.";
+        }
+        return { success: false, error: errorMsg };
       }
     }
 
-    // Local admin auth check for testing/offline setup
+    // Local dev mode fallback (only when Firebase is NOT configured)
     if (email.trim() && pass.length >= 6) {
       const adminObj = {
         email: email.trim(),
@@ -94,7 +101,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { success: true };
     }
 
-    return { success: false, error: "Please provide a valid email and password (min 6 characters)" };
+    return { success: false, error: "Please provide a valid email and password" };
   };
 
   const logout = async () => {
