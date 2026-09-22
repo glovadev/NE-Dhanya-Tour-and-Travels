@@ -65,11 +65,12 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
         <Link href="/" className="flex items-center gap-3 group">
           <div className="relative w-40 sm:w-48 h-12 sm:h-14 transition-transform group-hover:scale-[1.02]">
             <Image 
-              src="/images/logo.png" 
+              src="/images/logo-new.png" 
               alt="NE Dhanya Tour and Travels Logo" 
               fill
               className="object-contain object-left"
               priority
+              unoptimized
             />
           </div>
         </Link>

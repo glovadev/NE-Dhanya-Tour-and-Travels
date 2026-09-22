@@ -7,6 +7,7 @@ import { BookOpen, Plus, Eye, Clock, User, Check, Sparkles } from "lucide-react"
 import { getAllBlogPosts, saveBlogPost } from "@/lib/firebase/dataBridge";
 import { BlogPost } from "@/types";
 import { SeoPreview } from "@/components/admin/SeoPreview";
+import CloudinaryUpload from "@/components/admin/CloudinaryUpload";
 
 export default function AdminBlogPage() {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
@@ -151,13 +152,13 @@ export default function AdminBlogPage() {
                 </select>
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Featured Image URL</label>
-                <input
-                  type="url"
+              <div className="sm:col-span-2">
+                <CloudinaryUpload
+                  label="Featured Article Cover Image (Cloudinary Hosted)"
                   value={featuredImage}
-                  onChange={(e) => setFeaturedImage(e.target.value)}
-                  className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  onChange={(url) => setFeaturedImage(url)}
+                  folder="ne_dhaniya_tours/blogs"
+                  hint="High-resolution landscape photo for article header"
                 />
               </div>
             </div>

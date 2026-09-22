@@ -5,6 +5,7 @@ import { Settings, Save, CheckCircle, Globe, Phone, Mail, MapPin } from "lucide-
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { getSiteSettings, saveSiteSettings } from "@/lib/firebase/dataBridge";
 import { SiteSettings } from "@/types";
+import CloudinaryUpload from "@/components/admin/CloudinaryUpload";
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState<SiteSettings | null>(null);
@@ -177,6 +178,16 @@ export default function AdminSettingsPage() {
               value={settings.defaultMetaDescription}
               onChange={(e) => setSettings({ ...settings, defaultMetaDescription: e.target.value })}
               className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
+
+          <div className="pt-2">
+            <CloudinaryUpload
+              label="Default Social Share / OpenGraph Image (Cloudinary Hosted)"
+              value={settings.defaultOgImage}
+              onChange={(url) => setSettings({ ...settings, defaultOgImage: url })}
+              folder="ne_dhaniya_tours/branding"
+              hint="Recommended: 1200 x 630 px landscape image"
             />
           </div>
         </div>

@@ -113,28 +113,35 @@ export default async function AdminDashboardPage() {
             className="inline-flex items-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow transition-all"
           >
             <Plus className="w-4 h-4" />
-            <span>Manage Tour Packages</span>
+            <span>Tour Packages</span>
+          </Link>
+          <Link
+            href="/admin/places"
+            className="inline-flex items-center gap-2 py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-all"
+          >
+            <MapPin className="w-4 h-4 text-amber-400" />
+            <span>Tourist Places</span>
+          </Link>
+          <Link
+            href="/admin/vehicles"
+            className="inline-flex items-center gap-2 py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-all"
+          >
+            <Car className="w-4 h-4 text-purple-400" />
+            <span>Vehicle Fleet</span>
           </Link>
           <Link
             href="/admin/destinations"
             className="inline-flex items-center gap-2 py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-all"
           >
-            <Plus className="w-4 h-4" />
-            <span>Manage Destinations</span>
-          </Link>
-          <Link
-            href="/admin/blog"
-            className="inline-flex items-center gap-2 py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-all"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Write New Blog Post</span>
+            <Compass className="w-4 h-4 text-emerald-400" />
+            <span>Destinations</span>
           </Link>
           <Link
             href="/admin/enquiries"
             className="inline-flex items-center gap-2 py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-all"
           >
-            <MessageSquare className="w-4 h-4" />
-            <span>View All Enquiries</span>
+            <MessageSquare className="w-4 h-4 text-rose-400" />
+            <span>Customer Enquiries</span>
           </Link>
         </div>
       </div>

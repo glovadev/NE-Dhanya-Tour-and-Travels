@@ -37,10 +37,11 @@ export default function AdminLoginPage() {
         <div className="text-center mb-8">
           <div className="relative w-48 h-14 mx-auto mb-4">
             <Image 
-              src="/images/logo.png" 
+              src="/images/logo-new.png" 
               alt="NE Dhanya Tour and Travels" 
               fill 
               className="object-contain" 
+              unoptimized
             />
           </div>
           <h1 className="text-xl font-bold text-white font-heading">

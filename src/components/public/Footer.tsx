@@ -98,10 +98,11 @@ export const Footer: React.FC<FooterProps> = ({ settings }) => {
             <Link href="/" className="inline-block">
               <div className="relative w-48 h-14 bg-white/5 rounded-lg p-2">
                 <Image 
-                  src="/images/logo.png" 
+                  src="/images/logo-new.png" 
                   alt="NE Dhanya Tour and Travels" 
                   fill
                   className="object-contain object-left"
+                  unoptimized
                 />
               </div>
             </Link>
