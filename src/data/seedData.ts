@@ -12,10 +12,10 @@ import {
 export const initialSiteSettings: SiteSettings = {
   businessName: "NE Dhanya Tour and Travels",
   tagline: "Your Trusted Travel Partner for Northeast India & Bhutan",
-  whatsappNumber: "919678290128",
-  phoneNumber: "+91 96782 90128",
+  whatsappNumber: "919387843282",
+  phoneNumber: "+91 93878 43282",
   secondaryPhoneNumber: "+91 98640 66495",
-  email: "menin.ghy123@gmail.com",
+  email: "munin.ghy123@gmail.com",
   address: "Guwahati, Assam, India - 781001 (Gateway to Northeast India)",
   businessHours: "Monday - Sunday: 7:00 AM - 10:00 PM (WhatsApp Support 24/7)",
   socialLinks: {

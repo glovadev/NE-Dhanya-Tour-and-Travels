@@ -73,7 +73,7 @@ export default function AdminSettingsPage() {
                 required
                 value={settings.whatsappNumber}
                 onChange={(e) => setSettings({ ...settings, whatsappNumber: e.target.value })}
-                placeholder="e.g. 919864000000"
+                placeholder="e.g. 919387843282"
                 className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
               <p className="text-[10px] text-slate-500 mt-1">
@@ -90,7 +90,7 @@ export default function AdminSettingsPage() {
                 required
                 value={settings.phoneNumber}
                 onChange={(e) => setSettings({ ...settings, phoneNumber: e.target.value })}
-                placeholder="e.g. +91 96782 90128"
+                placeholder="e.g. +91 93878 43282"
                 className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>

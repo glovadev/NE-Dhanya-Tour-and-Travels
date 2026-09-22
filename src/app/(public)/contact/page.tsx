@@ -16,10 +16,10 @@ import { createWhatsAppLink } from "@/lib/whatsapp";
 import { submitEnquiry } from "@/lib/firebase/dataBridge";
 
 export default function ContactPage() {
-  const whatsappNumber = "919678290128";
-  const phoneNumber = "+91 96782 90128";
+  const whatsappNumber = "919387843282";
+  const phoneNumber = "+91 93878 43282";
   const secondaryPhoneNumber = "+91 98640 66495";
-  const email = "menin.ghy123@gmail.com";
+  const email = "munin.ghy123@gmail.com";
   const address = "Guwahati, Assam, India - 781001 (Gateway to Northeast India)";
   const businessHours = "Monday - Sunday: 7:00 AM - 10:00 PM (WhatsApp Support 24/7)";
 

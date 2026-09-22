@@ -100,7 +100,7 @@ interface TestimonialSliderProps {
   whatsappNumber?: string;
 }
 
-export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ whatsappNumber = "919678290128" }) => {
+export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ whatsappNumber = "919387843282" }) => {
   const [items, setItems] = useState<Testimonial[]>(defaultTestimonials);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
