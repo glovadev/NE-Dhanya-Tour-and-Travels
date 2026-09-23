@@ -53,10 +53,10 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
 
   return (
     <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-md border-b border-slate-100/80 ${
         isScrolled 
-          ? "bg-white/95 backdrop-blur-md shadow-md py-2" 
-          : "bg-gradient-to-b from-black/70 via-black/40 to-transparent py-3"
+          ? "shadow-md py-2" 
+          : "shadow-sm py-2.5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -79,9 +79,7 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
         <nav className="hidden lg:flex items-center gap-7">
           <Link 
             href="/" 
-            className={`font-medium text-sm tracking-wide transition-colors ${
-              isScrolled ? "text-slate-700 hover:text-forest-700" : "text-white/95 hover:text-emerald-400"
-            }`}
+            className="font-medium text-sm tracking-wide transition-colors text-slate-700 hover:text-forest-700"
           >
             Home
           </Link>
@@ -94,12 +92,10 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
           >
             <Link 
               href="/destinations" 
-              className={`flex items-center gap-1 font-medium text-sm tracking-wide transition-colors ${
-                isScrolled ? "text-slate-700 hover:text-forest-700" : "text-white/95 hover:text-emerald-400"
-              }`}
+              className="flex items-center gap-1 font-medium text-sm tracking-wide transition-colors text-slate-700 hover:text-forest-700"
             >
               Destinations
-              <ChevronDown className="w-4 h-4 opacity-80" />
+              <ChevronDown className="w-4 h-4 text-slate-500" />
             </Link>
 
             {destDropdownOpen && (
@@ -124,54 +120,42 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
 
           <Link 
             href="/tour-packages" 
-            className={`font-medium text-sm tracking-wide transition-colors ${
-              isScrolled ? "text-slate-700 hover:text-forest-700" : "text-white/95 hover:text-emerald-400"
-            }`}
+            className="font-medium text-sm tracking-wide transition-colors text-slate-700 hover:text-forest-700"
           >
             Tour Packages
           </Link>
 
           <Link 
             href="/car-rental" 
-            className={`font-medium text-sm tracking-wide transition-colors ${
-              isScrolled ? "text-slate-700 hover:text-forest-700" : "text-white/95 hover:text-emerald-400"
-            }`}
+            className="font-medium text-sm tracking-wide transition-colors text-slate-700 hover:text-forest-700"
           >
             Car Rental
           </Link>
 
           <Link 
             href="/hotel-booking" 
-            className={`font-medium text-sm tracking-wide transition-colors ${
-              isScrolled ? "text-slate-700 hover:text-forest-700" : "text-white/95 hover:text-emerald-400"
-            }`}
+            className="font-medium text-sm tracking-wide transition-colors text-slate-700 hover:text-forest-700"
           >
             Hotel Booking
           </Link>
 
           <Link 
             href="/blog" 
-            className={`font-medium text-sm tracking-wide transition-colors ${
-              isScrolled ? "text-slate-700 hover:text-forest-700" : "text-white/95 hover:text-emerald-400"
-            }`}
+            className="font-medium text-sm tracking-wide transition-colors text-slate-700 hover:text-forest-700"
           >
             Travel Guide
           </Link>
 
           <Link 
             href="/about-us" 
-            className={`font-medium text-sm tracking-wide transition-colors ${
-              isScrolled ? "text-slate-700 hover:text-forest-700" : "text-white/95 hover:text-emerald-400"
-            }`}
+            className="font-medium text-sm tracking-wide transition-colors text-slate-700 hover:text-forest-700"
           >
             About Us
           </Link>
 
           <Link 
             href="/contact" 
-            className={`font-medium text-sm tracking-wide transition-colors ${
-              isScrolled ? "text-slate-700 hover:text-forest-700" : "text-white/95 hover:text-emerald-400"
-            }`}
+            className="font-medium text-sm tracking-wide transition-colors text-slate-700 hover:text-forest-700"
           >
             Contact
           </Link>
@@ -181,11 +165,7 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
         <div className="hidden sm:flex items-center gap-2">
           <a
             href={`tel:${settings.phoneNumber.replace(/\s+/g, '')}`}
-            className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-full border transition-all ${
-              isScrolled 
-                ? "border-slate-200 text-slate-700 hover:bg-slate-50" 
-                : "border-white/30 text-white hover:bg-white/10"
-            }`}
+            className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-50 transition-all"
             title={`Call ${settings.phoneNumber}`}
           >
             <Phone className="w-3.5 h-3.5 text-emerald-500" />
@@ -195,11 +175,7 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
           {settings.secondaryPhoneNumber && (
             <a
               href={`tel:${settings.secondaryPhoneNumber.replace(/\s+/g, '')}`}
-              className={`hidden xl:flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-full border transition-all ${
-                isScrolled 
-                  ? "border-slate-200 text-slate-700 hover:bg-slate-50" 
-                  : "border-white/30 text-white hover:bg-white/10"
-              }`}
+              className="hidden xl:flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-50 transition-all"
               title={`Call ${settings.secondaryPhoneNumber}`}
             >
               <Phone className="w-3.5 h-3.5 text-emerald-500" />
@@ -221,9 +197,7 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
         {/* Mobile menu trigger */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={`lg:hidden p-2 rounded-lg transition-colors ${
-            isScrolled ? "text-slate-800" : "text-white"
-          }`}
+          className="lg:hidden p-2 rounded-lg text-slate-800 hover:bg-slate-100 transition-colors"
           aria-label="Toggle menu"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
