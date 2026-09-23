@@ -91,23 +91,12 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 }
 
 export async function saveSiteSettings(settings: SiteSettings): Promise<boolean> {
-  localSettings = { ...settings };
-  setSilentStorage(SETTINGS_STORAGE_KEY, settings);
-
-  if (typeof window !== 'undefined') {
-    fetch('/api/admin/revalidate', { method: 'POST' }).catch(() => {});
+  const saved = await serverSaveDoc('siteSettings', 'main', settings);
+  if (saved) {
+    localSettings = { ...settings };
+    setSilentStorage(SETTINGS_STORAGE_KEY, settings);
   }
-
-  if (isFirebaseConfigured && db) {
-    try {
-      await setDoc(doc(db, 'siteSettings', 'main'), settings, { merge: true });
-      return true;
-    } catch (e) {
-      console.error("Failed saving siteSettings to Firestore", e);
-      return false;
-    }
-  }
-  return true;
+  return saved;
 }
 
 // Local Storage Keys
@@ -160,6 +149,68 @@ function saveStoredItems<T>(key: string, items: T[], eventName: string) {
   }
 }
 
+// Helper: Execute document save via authenticated server API route or fallback to direct Firestore
+async function serverSaveDoc(collectionName: string, docId: string, data: any): Promise<boolean> {
+  if (typeof window !== 'undefined') {
+    try {
+      const res = await fetch('/api/admin/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ collectionName, docId, data })
+      });
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success === true) return true;
+      }
+    } catch (e) {
+      console.warn(`Failed /api/admin/save for ${collectionName}/${docId}`, e);
+    }
+  }
+
+  // Fallback for SSR or direct Firestore
+  if (isFirebaseConfigured && db) {
+    try {
+      await setDoc(doc(db, collectionName, docId), data, { merge: true });
+      return true;
+    } catch (e) {
+      console.error(`Direct Firestore setDoc failed for ${collectionName}/${docId}:`, e);
+      return false;
+    }
+  }
+  return true;
+}
+
+// Helper: Execute document delete via authenticated server API route or fallback to direct Firestore
+async function serverDeleteDoc(collectionName: string, docId: string): Promise<boolean> {
+  if (typeof window !== 'undefined') {
+    try {
+      const res = await fetch('/api/admin/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ collectionName, docId })
+      });
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success === true) return true;
+      }
+    } catch (e) {
+      console.warn(`Failed /api/admin/delete for ${collectionName}/${docId}`, e);
+    }
+  }
+
+  // Fallback for SSR or direct Firestore
+  if (isFirebaseConfigured && db) {
+    try {
+      await deleteDoc(doc(db, collectionName, docId));
+      return true;
+    } catch (e) {
+      console.error(`Direct Firestore deleteDoc failed for ${collectionName}/${docId}:`, e);
+      return false;
+    }
+  }
+  return true;
+}
+
 // DESTINATIONS
 export async function getAllDestinations(): Promise<Destination[]> {
   if (isFirebaseConfigured && db) {
@@ -186,43 +237,32 @@ export async function getDestinationBySlug(slug: string): Promise<Destination | 
 }
 
 export async function saveDestination(dest: Destination): Promise<boolean> {
-  const current = getStoredItems<Destination>(DESTINATIONS_STORAGE_KEY, initialDestinations);
-  const idx = current.findIndex(d => d.id === dest.id || d.slug === dest.slug);
-  if (idx >= 0) {
-    current[idx] = dest;
-  } else {
-    current.push(dest);
-  }
-  saveStoredItems(DESTINATIONS_STORAGE_KEY, current, 'ne_dhanya_destinations_updated');
-  localDestinations = current;
+  const docId = dest.slug || dest.id || `dest-${Date.now()}`;
+  const saved = await serverSaveDoc('destinations', docId, dest);
 
-  if (isFirebaseConfigured && db) {
-    try {
-      await setDoc(doc(db, 'destinations', dest.slug), dest, { merge: true });
-      return true;
-    } catch (e) {
-      console.error("Failed saving destination to Firestore", e);
-      return false;
+  if (saved) {
+    const current = getStoredItems<Destination>(DESTINATIONS_STORAGE_KEY, initialDestinations);
+    const idx = current.findIndex(d => d.id === dest.id || d.slug === dest.slug);
+    if (idx >= 0) {
+      current[idx] = dest;
+    } else {
+      current.push(dest);
     }
+    saveStoredItems(DESTINATIONS_STORAGE_KEY, current, 'ne_dhanya_destinations_updated');
+    localDestinations = current;
   }
-  return true;
+  return saved;
 }
 
 export async function deleteDestination(slugOrId: string): Promise<boolean> {
+  const deleted = await serverDeleteDoc('destinations', slugOrId);
+
   const current = getStoredItems<Destination>(DESTINATIONS_STORAGE_KEY, initialDestinations).filter(
     d => d.id !== slugOrId && d.slug !== slugOrId
   );
   saveStoredItems(DESTINATIONS_STORAGE_KEY, current, 'ne_dhanya_destinations_updated');
   localDestinations = current;
-
-  if (isFirebaseConfigured && db) {
-    try {
-      await deleteDoc(doc(db, 'destinations', slugOrId));
-    } catch (e) {
-      console.error("Failed deleting destination in Firestore", e);
-    }
-  }
-  return true;
+  return deleted;
 }
 
 // TOURIST PLACES
@@ -256,44 +296,32 @@ export async function getTouristPlaceBySlug(destSlug: string, placeSlug: string)
 }
 
 export async function saveTouristPlace(place: TouristPlace): Promise<boolean> {
-  const current = getStoredItems<TouristPlace>(PLACES_STORAGE_KEY, initialTouristPlaces);
-  const idx = current.findIndex(p => p.id === place.id || (p.destinationSlug === place.destinationSlug && p.slug === place.slug));
-  if (idx >= 0) {
-    current[idx] = place;
-  } else {
-    current.push(place);
-  }
-  saveStoredItems(PLACES_STORAGE_KEY, current, 'ne_dhanya_places_updated');
-  localPlaces = current;
+  const docId = place.id || `${place.destinationSlug}_${place.slug}`;
+  const saved = await serverSaveDoc('touristPlaces', docId, place);
 
-  if (isFirebaseConfigured && db) {
-    try {
-      const docId = place.id || `${place.destinationSlug}_${place.slug}`;
-      await setDoc(doc(db, 'touristPlaces', docId), place, { merge: true });
-      return true;
-    } catch (e) {
-      console.error("Failed saving place to Firestore", e);
-      return false;
+  if (saved) {
+    const current = getStoredItems<TouristPlace>(PLACES_STORAGE_KEY, initialTouristPlaces);
+    const idx = current.findIndex(p => p.id === place.id || (p.destinationSlug === place.destinationSlug && p.slug === place.slug));
+    if (idx >= 0) {
+      current[idx] = place;
+    } else {
+      current.push(place);
     }
+    saveStoredItems(PLACES_STORAGE_KEY, current, 'ne_dhanya_places_updated');
+    localPlaces = current;
   }
-  return true;
+  return saved;
 }
 
 export async function deleteTouristPlace(slugOrId: string): Promise<boolean> {
+  const deleted = await serverDeleteDoc('touristPlaces', slugOrId);
+
   const current = getStoredItems<TouristPlace>(PLACES_STORAGE_KEY, initialTouristPlaces).filter(
     p => p.id !== slugOrId && p.slug !== slugOrId && `${p.destinationSlug}_${p.slug}` !== slugOrId
   );
   saveStoredItems(PLACES_STORAGE_KEY, current, 'ne_dhanya_places_updated');
   localPlaces = current;
-
-  if (isFirebaseConfigured && db) {
-    try {
-      await deleteDoc(doc(db, 'touristPlaces', slugOrId));
-    } catch (e) {
-      console.error("Failed deleting place in Firestore", e);
-    }
-  }
-  return true;
+  return deleted;
 }
 
 // TOUR PACKAGES
@@ -327,44 +355,32 @@ export async function getPackagesByDestination(destSlug: string): Promise<TourPa
 }
 
 export async function savePackage(pkg: TourPackage): Promise<boolean> {
-  const current = getStoredItems<TourPackage>(PACKAGES_STORAGE_KEY, initialTourPackages);
-  const idx = current.findIndex(p => p.id === pkg.id || p.slug === pkg.slug);
-  if (idx >= 0) {
-    current[idx] = pkg;
-  } else {
-    current.unshift(pkg);
-  }
-  saveStoredItems(PACKAGES_STORAGE_KEY, current, 'ne_dhanya_packages_updated');
-  localPackages = current;
+  const docId = pkg.slug || pkg.id || `pkg-${Date.now()}`;
+  const saved = await serverSaveDoc('tourPackages', docId, pkg);
 
-  if (isFirebaseConfigured && db) {
-    try {
-      const docId = pkg.slug || pkg.id || `pkg-${Date.now()}`;
-      await setDoc(doc(db, 'tourPackages', docId), pkg, { merge: true });
-      return true;
-    } catch (e) {
-      console.error("Failed saving package to Firestore", e);
-      return false;
+  if (saved) {
+    const current = getStoredItems<TourPackage>(PACKAGES_STORAGE_KEY, initialTourPackages);
+    const idx = current.findIndex(p => p.id === pkg.id || p.slug === pkg.slug);
+    if (idx >= 0) {
+      current[idx] = pkg;
+    } else {
+      current.unshift(pkg);
     }
+    saveStoredItems(PACKAGES_STORAGE_KEY, current, 'ne_dhanya_packages_updated');
+    localPackages = current;
   }
-  return true;
+  return saved;
 }
 
 export async function deletePackage(slugOrId: string): Promise<boolean> {
+  const deleted = await serverDeleteDoc('tourPackages', slugOrId);
+
   const current = getStoredItems<TourPackage>(PACKAGES_STORAGE_KEY, initialTourPackages).filter(
     p => p.id !== slugOrId && p.slug !== slugOrId
   );
   saveStoredItems(PACKAGES_STORAGE_KEY, current, 'ne_dhanya_packages_updated');
   localPackages = current;
-
-  if (isFirebaseConfigured && db) {
-    try {
-      await deleteDoc(doc(db, 'tourPackages', slugOrId));
-    } catch (e) {
-      console.error("Failed deleting package in Firestore", e);
-    }
-  }
-  return true;
+  return deleted;
 }
 
 // VEHICLES
@@ -393,44 +409,32 @@ export async function getVehicleBySlug(slug: string): Promise<Vehicle | null> {
 }
 
 export async function saveVehicle(vehicle: Vehicle): Promise<boolean> {
-  const current = getStoredItems<Vehicle>(VEHICLES_STORAGE_KEY, initialVehicles);
-  const idx = current.findIndex(v => v.id === vehicle.id || v.slug === vehicle.slug);
-  if (idx >= 0) {
-    current[idx] = vehicle;
-  } else {
-    current.push(vehicle);
-  }
-  saveStoredItems(VEHICLES_STORAGE_KEY, current, 'ne_dhanya_vehicles_updated');
-  localVehicles = current;
+  const docId = vehicle.slug || vehicle.id || `veh-${Date.now()}`;
+  const saved = await serverSaveDoc('vehicles', docId, vehicle);
 
-  if (isFirebaseConfigured && db) {
-    try {
-      const docId = vehicle.slug || vehicle.id || `veh-${Date.now()}`;
-      await setDoc(doc(db, 'vehicles', docId), vehicle, { merge: true });
-      return true;
-    } catch (e) {
-      console.error("Failed saving vehicle to Firestore", e);
-      return false;
+  if (saved) {
+    const current = getStoredItems<Vehicle>(VEHICLES_STORAGE_KEY, initialVehicles);
+    const idx = current.findIndex(v => v.id === vehicle.id || v.slug === vehicle.slug);
+    if (idx >= 0) {
+      current[idx] = vehicle;
+    } else {
+      current.push(vehicle);
     }
+    saveStoredItems(VEHICLES_STORAGE_KEY, current, 'ne_dhanya_vehicles_updated');
+    localVehicles = current;
   }
-  return true;
+  return saved;
 }
 
 export async function deleteVehicle(slugOrId: string): Promise<boolean> {
+  const deleted = await serverDeleteDoc('vehicles', slugOrId);
+
   const current = getStoredItems<Vehicle>(VEHICLES_STORAGE_KEY, initialVehicles).filter(
     v => v.id !== slugOrId && v.slug !== slugOrId
   );
   saveStoredItems(VEHICLES_STORAGE_KEY, current, 'ne_dhanya_vehicles_updated');
   localVehicles = current;
-
-  if (isFirebaseConfigured && db) {
-    try {
-      await deleteDoc(doc(db, 'vehicles', slugOrId));
-    } catch (e) {
-      console.error("Failed deleting vehicle in Firestore", e);
-    }
-  }
-  return true;
+  return deleted;
 }
 
 // BLOGS
@@ -459,44 +463,32 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
 }
 
 export async function saveBlogPost(post: BlogPost): Promise<boolean> {
-  const current = getStoredItems<BlogPost>(BLOGS_STORAGE_KEY, initialBlogPosts);
-  const idx = current.findIndex(b => b.id === post.id || b.slug === post.slug);
-  if (idx >= 0) {
-    current[idx] = post;
-  } else {
-    current.unshift(post);
-  }
-  saveStoredItems(BLOGS_STORAGE_KEY, current, 'ne_dhanya_blogs_updated');
-  localBlogs = current;
+  const docId = post.slug || post.id || `blog-${Date.now()}`;
+  const saved = await serverSaveDoc('blogs', docId, post);
 
-  if (isFirebaseConfigured && db) {
-    try {
-      const docId = post.slug || post.id || `blog-${Date.now()}`;
-      await setDoc(doc(db, 'blogs', docId), post, { merge: true });
-      return true;
-    } catch (e) {
-      console.error("Failed saving blog post to Firestore", e);
-      return false;
+  if (saved) {
+    const current = getStoredItems<BlogPost>(BLOGS_STORAGE_KEY, initialBlogPosts);
+    const idx = current.findIndex(b => b.id === post.id || b.slug === post.slug);
+    if (idx >= 0) {
+      current[idx] = post;
+    } else {
+      current.unshift(post);
     }
+    saveStoredItems(BLOGS_STORAGE_KEY, current, 'ne_dhanya_blogs_updated');
+    localBlogs = current;
   }
-  return true;
+  return saved;
 }
 
 export async function deleteBlogPost(slugOrId: string): Promise<boolean> {
+  const deleted = await serverDeleteDoc('blogs', slugOrId);
+
   const current = getStoredItems<BlogPost>(BLOGS_STORAGE_KEY, initialBlogPosts).filter(
     b => b.id !== slugOrId && b.slug !== slugOrId
   );
   saveStoredItems(BLOGS_STORAGE_KEY, current, 'ne_dhanya_blogs_updated');
   localBlogs = current;
-
-  if (isFirebaseConfigured && db) {
-    try {
-      await deleteDoc(doc(db, 'blogs', slugOrId));
-    } catch (e) {
-      console.error("Failed deleting blog post in Firestore", e);
-    }
-  }
-  return true;
+  return deleted;
 }
 
 export async function getAllBlogCategories(): Promise<BlogCategory[]> {
@@ -545,16 +537,8 @@ export async function updateEnquiryStatus(id: string, status: Enquiry['status'])
     item.status = status;
   }
 
-  if (isFirebaseConfigured && db) {
-    try {
-      await updateDoc(doc(db, 'enquiries', id), { status });
-      return true;
-    } catch (e) {
-      console.error("Failed updating enquiry status in Firestore", e);
-      return false;
-    }
-  }
-  return true;
+  const saved = await serverSaveDoc('enquiries', id, { status });
+  return saved;
 }
 
 // REVIEWS & TESTIMONIALS
@@ -648,7 +632,6 @@ export async function submitReview(reviewData: Omit<Review, 'id' | 'createdAt' |
 }
 
 export async function updateReviewStatus(id: string, status: Review['status']): Promise<boolean> {
-  // 1. Update in local storage immediately
   const current = getStoredLocalReviews();
   const item = current.find(r => r.id === id);
   if (item) {
@@ -657,37 +640,15 @@ export async function updateReviewStatus(id: string, status: Review['status']): 
     localReviews = current;
   }
 
-  // 2. Update in Firestore
-  if (isFirebaseConfigured && db) {
-    try {
-      // First try direct document key update
-      await setDoc(doc(db, 'reviews', id), { status }, { merge: true });
-    } catch (e) {
-      console.warn("Direct doc update failed, trying query by id field", e);
-      try {
-        const q = query(collection(db, 'reviews'), where('id', '==', id));
-        const qSnap = await getDocs(q);
-        for (const d of qSnap.docs) {
-          await updateDoc(d.ref, { status });
-        }
-      } catch (err2) {
-        console.error("Failed updating review status in Firestore", err2);
-      }
-    }
-  }
-  return true;
+  const saved = await serverSaveDoc('reviews', id, { status });
+  return saved;
 }
 
 export async function deleteReview(id: string): Promise<boolean> {
+  const deleted = await serverDeleteDoc('reviews', id);
+
   const current = getStoredLocalReviews().filter(r => r.id !== id);
   saveStoredLocalReviews(current);
   localReviews = current;
-  if (isFirebaseConfigured && db) {
-    try {
-      await deleteDoc(doc(db, 'reviews', id));
-    } catch (e) {
-      console.error("Failed deleting review in Firestore", e);
-    }
-  }
-  return true;
+  return deleted;
 }

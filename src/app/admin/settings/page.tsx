@@ -21,10 +21,12 @@ export default function AdminSettingsPage() {
     if (!settings) return;
 
     setSaving(true);
-    setSaved(false);
-
-    await saveSiteSettings(settings);
+    const ok = await saveSiteSettings(settings);
     setSaving(false);
+    if (!ok) {
+      alert("Failed to save settings to database. Please check your connection and try again.");
+      return;
+    }
     setSaved(true);
 
     setTimeout(() => setSaved(false), 3000);

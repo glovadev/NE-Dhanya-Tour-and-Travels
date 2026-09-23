@@ -172,7 +172,10 @@ export default function AdminPlacesPage() {
         updatedAt: new Date().toISOString(),
       };
 
-      await saveTouristPlace(payload);
+      const ok = await saveTouristPlace(payload);
+      if (!ok) {
+        throw new Error("Failed to save tourist place to database. Please check connection and try again.");
+      }
       await fetchPlaces();
       setStatusMessage({ type: "success", text: "Tourist Place saved successfully!" });
       setTimeout(() => {
@@ -188,7 +191,11 @@ export default function AdminPlacesPage() {
 
   const handleDelete = async (place: TouristPlace) => {
     try {
-      await deleteTouristPlace(place.id || `${place.destinationSlug}_${place.slug}`);
+      const ok = await deleteTouristPlace(place.id || `${place.destinationSlug}_${place.slug}`);
+      if (!ok) {
+        alert("Failed to delete place from database. Please try again.");
+        return;
+      }
       await fetchPlaces();
       setDeleteConfirmId(null);
     } catch (err) {

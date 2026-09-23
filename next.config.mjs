@@ -1,3 +1,4 @@
+// Next.js Configuration with Cloudinary & Firebase remote patterns
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,

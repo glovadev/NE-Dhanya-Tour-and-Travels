@@ -64,7 +64,11 @@ export default function AdminBlogPage() {
       createdAt: new Date().toISOString(),
     };
 
-    await saveBlogPost(newPost);
+    const ok = await saveBlogPost(newPost);
+    if (!ok) {
+      alert("Failed to save blog post to database. Please check your connection and try again.");
+      return;
+    }
     setBlogs([newPost, ...blogs]);
     setShowEditor(false);
     alert("Blog post published successfully and integrated into public website!");

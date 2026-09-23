@@ -262,7 +262,10 @@ export default function AdminPackagesPage() {
         updatedAt: new Date().toISOString(),
       };
 
-      await savePackage(payload);
+      const ok = await savePackage(payload);
+      if (!ok) {
+        throw new Error("Failed to save tour package to database. Please check your connection and try again.");
+      }
       await fetchPackages();
       setStatusMessage({ type: "success", text: "Tour Package saved successfully!" });
       setTimeout(() => {
@@ -278,7 +281,11 @@ export default function AdminPackagesPage() {
 
   const handleDelete = async (pkg: TourPackage) => {
     try {
-      await deletePackage(pkg.slug || pkg.id);
+      const ok = await deletePackage(pkg.slug || pkg.id);
+      if (!ok) {
+        alert("Failed to delete package from database. Please try again.");
+        return;
+      }
       await fetchPackages();
       setDeleteConfirmId(null);
     } catch (err) {

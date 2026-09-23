@@ -149,7 +149,10 @@ export default function AdminDestinationsPage() {
         updatedAt: new Date().toISOString(),
       };
 
-      await saveDestination(payload);
+      const ok = await saveDestination(payload);
+      if (!ok) {
+        throw new Error("Failed to save destination to database. Please check connection and try again.");
+      }
       await fetchDestinations();
       setStatusMessage({ type: "success", text: "Destination saved successfully!" });
       setTimeout(() => {
@@ -165,7 +168,11 @@ export default function AdminDestinationsPage() {
 
   const handleDelete = async (dest: Destination) => {
     try {
-      await deleteDestination(dest.slug || dest.id);
+      const ok = await deleteDestination(dest.slug || dest.id);
+      if (!ok) {
+        alert("Failed to delete destination from database. Please try again.");
+        return;
+      }
       await fetchDestinations();
       setDeleteConfirmId(null);
     } catch (err) {

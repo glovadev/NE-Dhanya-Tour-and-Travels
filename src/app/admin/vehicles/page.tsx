@@ -124,7 +124,10 @@ export default function AdminVehiclesPage() {
         id: formData.id || formData.slug,
       };
 
-      await saveVehicle(payload);
+      const ok = await saveVehicle(payload);
+      if (!ok) {
+        throw new Error("Failed to save vehicle to database. Please check connection and try again.");
+      }
       await fetchVehicles();
       setStatusMessage({ type: "success", text: "Vehicle saved successfully!" });
       setTimeout(() => {
@@ -140,7 +143,11 @@ export default function AdminVehiclesPage() {
 
   const handleDelete = async (vehicle: Vehicle) => {
     try {
-      await deleteVehicle(vehicle.slug || vehicle.id);
+      const ok = await deleteVehicle(vehicle.slug || vehicle.id);
+      if (!ok) {
+        alert("Failed to delete vehicle from database. Please try again.");
+        return;
+      }
       await fetchVehicles();
       setDeleteConfirmId(null);
     } catch (err) {
