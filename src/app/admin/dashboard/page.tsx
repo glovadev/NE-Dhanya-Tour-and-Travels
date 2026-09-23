@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
   Package, 
@@ -11,7 +13,8 @@ import {
   Plus, 
   Clock,
   CheckCircle2,
-  Star
+  Star,
+  Loader2
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { 
@@ -25,18 +28,57 @@ import {
   getSiteSettings
 } from "@/lib/firebase/dataBridge";
 import { createWhatsAppLink } from "@/lib/whatsapp";
+import { Destination, TouristPlace, TourPackage, Vehicle, BlogPost, Enquiry, Review, SiteSettings } from "@/types";
 
-export default async function AdminDashboardPage() {
-  const [destinations, places, packages, vehicles, blogs, enquiries, reviews, settings] = await Promise.all([
-    getAllDestinations(),
-    getAllTouristPlaces(),
-    getAllPackages(),
-    getAllVehicles(),
-    getAllBlogPosts(),
-    getAllEnquiries(),
-    getAllReviews(),
-    getSiteSettings()
-  ]);
+export default function AdminDashboardPage() {
+  const [loading, setLoading] = useState(true);
+  const [destinations, setDestinations] = useState<Destination[]>([]);
+  const [places, setPlaces] = useState<TouristPlace[]>([]);
+  const [packages, setPackages] = useState<TourPackage[]>([]);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const [enquiries, setEnquiries] = useState<Enquiry[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [settings, setSettings] = useState<SiteSettings | null>(null);
+
+  useEffect(() => {
+    async function loadStats() {
+      try {
+        const [d, pl, pk, v, b, eq, rv, st] = await Promise.all([
+          getAllDestinations(),
+          getAllTouristPlaces(),
+          getAllPackages(),
+          getAllVehicles(),
+          getAllBlogPosts(),
+          getAllEnquiries(),
+          getAllReviews(),
+          getSiteSettings()
+        ]);
+        setDestinations(d);
+        setPlaces(pl);
+        setPackages(pk);
+        setVehicles(v);
+        setBlogs(b);
+        setEnquiries(eq);
+        setReviews(rv);
+        setSettings(st);
+      } catch (err) {
+        console.error("Error loading dashboard data", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadStats();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-3">
+        <Loader2 className="w-8 h-8 text-emerald-400 animate-spin" />
+        <span className="text-sm text-slate-400">Loading admin metrics...</span>
+      </div>
+    );
+  }
 
   const publishedBlogs = blogs.filter(b => b.status === 'published').length;
   const newEnquiries = enquiries.filter(e => e.status === 'new').length;
@@ -69,7 +111,7 @@ export default async function AdminDashboardPage() {
         <div className="flex items-center gap-2 bg-slate-800/80 px-4 py-2 rounded-xl border border-slate-700 text-xs">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           <span className="text-slate-400">Configured WhatsApp:</span>
-          <span className="font-mono text-emerald-400 font-semibold">+{settings.whatsappNumber}</span>
+          <span className="font-mono text-emerald-400 font-semibold">+{settings?.whatsappNumber || "919387843282"}</span>
         </div>
       </div>
 

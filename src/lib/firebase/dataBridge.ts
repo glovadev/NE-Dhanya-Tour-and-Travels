@@ -60,22 +60,44 @@ let localEnquiries: Enquiry[] = [
 ];
 
 // SITE SETTINGS
+const SETTINGS_STORAGE_KEY = 'ne_dhanya_settings_cache';
+
 export async function getSiteSettings(): Promise<SiteSettings> {
   if (isFirebaseConfigured && db) {
     try {
       const snap = await getDoc(doc(db, 'siteSettings', 'main'));
       if (snap.exists()) {
-        return snap.data() as SiteSettings;
+        const data = snap.data() as SiteSettings;
+        setSilentStorage(SETTINGS_STORAGE_KEY, data);
+        localSettings = data;
+        return data;
       }
     } catch (e) {
       console.warn("Failed fetching siteSettings from Firestore, using fallback", e);
     }
+  }
+  if (typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem(SETTINGS_STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed && parsed.companyName) {
+          return parsed;
+        }
+      }
+    } catch (e) {}
   }
   return localSettings;
 }
 
 export async function saveSiteSettings(settings: SiteSettings): Promise<boolean> {
   localSettings = { ...settings };
+  setSilentStorage(SETTINGS_STORAGE_KEY, settings);
+
+  if (typeof window !== 'undefined') {
+    fetch('/api/admin/revalidate', { method: 'POST' }).catch(() => {});
+  }
+
   if (isFirebaseConfigured && db) {
     try {
       await setDoc(doc(db, 'siteSettings', 'main'), settings, { merge: true });
@@ -93,6 +115,8 @@ const DESTINATIONS_STORAGE_KEY = 'ne_dhanya_destinations_cache';
 const PLACES_STORAGE_KEY = 'ne_dhanya_places_cache';
 const PACKAGES_STORAGE_KEY = 'ne_dhanya_packages_cache';
 const VEHICLES_STORAGE_KEY = 'ne_dhanya_vehicles_cache';
+const BLOGS_STORAGE_KEY = 'ne_dhanya_blogs_cache';
+const REVIEWS_STORAGE_KEY = 'ne_dhanya_reviews_cache';
 
 // Helper: Safely get array from localStorage with fallback
 function getStoredItems<T>(key: string, fallback: T[]): T[] {
@@ -112,12 +136,24 @@ function getStoredItems<T>(key: string, fallback: T[]): T[] {
   return [...fallback];
 }
 
-// Helper: Safely save array to localStorage and dispatch event
+// Helper: Silently cache items without triggering mutation events or loops
+function setSilentStorage<T>(key: string, data: T) {
+  if (typeof window !== 'undefined') {
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch (e) {
+      // ignore
+    }
+  }
+}
+
+// Helper: Safely save array to localStorage and dispatch mutation event + purge Next.js server cache
 function saveStoredItems<T>(key: string, items: T[], eventName: string) {
   if (typeof window !== 'undefined') {
     try {
       localStorage.setItem(key, JSON.stringify(items));
       window.dispatchEvent(new Event(eventName));
+      fetch('/api/admin/revalidate', { method: 'POST' }).catch(() => {});
     } catch (e) {
       console.warn(`Could not write localStorage for ${key}`, e);
     }
@@ -126,25 +162,20 @@ function saveStoredItems<T>(key: string, items: T[], eventName: string) {
 
 // DESTINATIONS
 export async function getAllDestinations(): Promise<Destination[]> {
-  const local = getStoredItems<Destination>(DESTINATIONS_STORAGE_KEY, initialDestinations);
-
   if (isFirebaseConfigured && db) {
     try {
       const snap = await getDocs(collection(db, 'destinations'));
       if (!snap.empty) {
         const firestoreData = snap.docs.map(d => ({ id: d.id, ...d.data() } as Destination));
-        // Merge with local data prioritizing updated items
-        const firestoreSlugs = new Set(firestoreData.map(d => d.slug));
-        const localOnly = local.filter(d => !firestoreSlugs.has(d.slug));
-        const merged = [...localOnly, ...firestoreData];
-        saveStoredItems(DESTINATIONS_STORAGE_KEY, merged, 'ne_dhanya_destinations_updated');
-        localDestinations = merged;
-        return merged;
+        setSilentStorage(DESTINATIONS_STORAGE_KEY, firestoreData);
+        localDestinations = firestoreData;
+        return firestoreData;
       }
     } catch (e) {
       console.warn("Failed fetching destinations from Firestore, using local fallback", e);
     }
   }
+  const local = getStoredItems<Destination>(DESTINATIONS_STORAGE_KEY, initialDestinations);
   localDestinations = local;
   return local;
 }
@@ -196,24 +227,20 @@ export async function deleteDestination(slugOrId: string): Promise<boolean> {
 
 // TOURIST PLACES
 export async function getAllTouristPlaces(): Promise<TouristPlace[]> {
-  const local = getStoredItems<TouristPlace>(PLACES_STORAGE_KEY, initialTouristPlaces);
-
   if (isFirebaseConfigured && db) {
     try {
       const snap = await getDocs(collection(db, 'touristPlaces'));
       if (!snap.empty) {
         const firestoreData = snap.docs.map(d => ({ id: d.id, ...d.data() } as TouristPlace));
-        const firestoreIds = new Set(firestoreData.map(p => p.id || `${p.destinationSlug}_${p.slug}`));
-        const localOnly = local.filter(p => !firestoreIds.has(p.id) && !firestoreIds.has(`${p.destinationSlug}_${p.slug}`));
-        const merged = [...localOnly, ...firestoreData];
-        saveStoredItems(PLACES_STORAGE_KEY, merged, 'ne_dhanya_places_updated');
-        localPlaces = merged;
-        return merged;
+        setSilentStorage(PLACES_STORAGE_KEY, firestoreData);
+        localPlaces = firestoreData;
+        return firestoreData;
       }
     } catch (e) {
       console.warn("Failed fetching tourist places from Firestore, using local fallback", e);
     }
   }
+  const local = getStoredItems<TouristPlace>(PLACES_STORAGE_KEY, initialTouristPlaces);
   localPlaces = local;
   return local;
 }
@@ -271,24 +298,20 @@ export async function deleteTouristPlace(slugOrId: string): Promise<boolean> {
 
 // TOUR PACKAGES
 export async function getAllPackages(): Promise<TourPackage[]> {
-  const local = getStoredItems<TourPackage>(PACKAGES_STORAGE_KEY, initialTourPackages);
-
   if (isFirebaseConfigured && db) {
     try {
       const snap = await getDocs(collection(db, 'tourPackages'));
       if (!snap.empty) {
         const firestoreData = snap.docs.map(d => ({ id: d.id, ...d.data() } as TourPackage));
-        const firestoreSlugs = new Set(firestoreData.map(p => p.slug));
-        const localOnly = local.filter(p => !firestoreSlugs.has(p.slug));
-        const merged = [...localOnly, ...firestoreData];
-        saveStoredItems(PACKAGES_STORAGE_KEY, merged, 'ne_dhanya_packages_updated');
-        localPackages = merged;
-        return merged;
+        setSilentStorage(PACKAGES_STORAGE_KEY, firestoreData);
+        localPackages = firestoreData;
+        return firestoreData;
       }
     } catch (e) {
       console.warn("Failed fetching packages from Firestore, using local fallback", e);
     }
   }
+  const local = getStoredItems<TourPackage>(PACKAGES_STORAGE_KEY, initialTourPackages);
   localPackages = local;
   return local;
 }
@@ -316,7 +339,8 @@ export async function savePackage(pkg: TourPackage): Promise<boolean> {
 
   if (isFirebaseConfigured && db) {
     try {
-      await setDoc(doc(db, 'tourPackages', pkg.slug), pkg, { merge: true });
+      const docId = pkg.slug || pkg.id || `pkg-${Date.now()}`;
+      await setDoc(doc(db, 'tourPackages', docId), pkg, { merge: true });
       return true;
     } catch (e) {
       console.error("Failed saving package to Firestore", e);
@@ -345,24 +369,20 @@ export async function deletePackage(slugOrId: string): Promise<boolean> {
 
 // VEHICLES
 export async function getAllVehicles(): Promise<Vehicle[]> {
-  const local = getStoredItems<Vehicle>(VEHICLES_STORAGE_KEY, initialVehicles);
-
   if (isFirebaseConfigured && db) {
     try {
       const snap = await getDocs(collection(db, 'vehicles'));
       if (!snap.empty) {
         const firestoreData = snap.docs.map(d => ({ id: d.id, ...d.data() } as Vehicle));
-        const firestoreSlugs = new Set(firestoreData.map(v => v.slug));
-        const localOnly = local.filter(v => !firestoreSlugs.has(v.slug));
-        const merged = [...localOnly, ...firestoreData];
-        saveStoredItems(VEHICLES_STORAGE_KEY, merged, 'ne_dhanya_vehicles_updated');
-        localVehicles = merged;
-        return merged;
+        setSilentStorage(VEHICLES_STORAGE_KEY, firestoreData);
+        localVehicles = firestoreData;
+        return firestoreData;
       }
     } catch (e) {
       console.warn("Failed fetching vehicles from Firestore, using local fallback", e);
     }
   }
+  const local = getStoredItems<Vehicle>(VEHICLES_STORAGE_KEY, initialVehicles);
   localVehicles = local;
   return local;
 }
@@ -385,7 +405,8 @@ export async function saveVehicle(vehicle: Vehicle): Promise<boolean> {
 
   if (isFirebaseConfigured && db) {
     try {
-      await setDoc(doc(db, 'vehicles', vehicle.slug), vehicle, { merge: true });
+      const docId = vehicle.slug || vehicle.id || `veh-${Date.now()}`;
+      await setDoc(doc(db, 'vehicles', docId), vehicle, { merge: true });
       return true;
     } catch (e) {
       console.error("Failed saving vehicle to Firestore", e);
@@ -418,13 +439,18 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
     try {
       const snap = await getDocs(collection(db, 'blogs'));
       if (!snap.empty) {
-        return snap.docs.map(d => ({ id: d.id, ...d.data() } as BlogPost));
+        const firestoreData = snap.docs.map(d => ({ id: d.id, ...d.data() } as BlogPost));
+        setSilentStorage(BLOGS_STORAGE_KEY, firestoreData);
+        localBlogs = firestoreData;
+        return firestoreData;
       }
     } catch (e) {
       console.warn("Failed fetching blogs from Firestore, using fallback", e);
     }
   }
-  return localBlogs;
+  const local = getStoredItems<BlogPost>(BLOGS_STORAGE_KEY, initialBlogPosts);
+  localBlogs = local;
+  return local;
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
@@ -433,20 +459,41 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
 }
 
 export async function saveBlogPost(post: BlogPost): Promise<boolean> {
-  const idx = localBlogs.findIndex(b => b.id === post.id || b.slug === post.slug);
+  const current = getStoredItems<BlogPost>(BLOGS_STORAGE_KEY, initialBlogPosts);
+  const idx = current.findIndex(b => b.id === post.id || b.slug === post.slug);
   if (idx >= 0) {
-    localBlogs[idx] = post;
+    current[idx] = post;
   } else {
-    localBlogs.push(post);
+    current.unshift(post);
   }
+  saveStoredItems(BLOGS_STORAGE_KEY, current, 'ne_dhanya_blogs_updated');
+  localBlogs = current;
 
   if (isFirebaseConfigured && db) {
     try {
-      await setDoc(doc(db, 'blogs', post.slug), post, { merge: true });
+      const docId = post.slug || post.id || `blog-${Date.now()}`;
+      await setDoc(doc(db, 'blogs', docId), post, { merge: true });
       return true;
     } catch (e) {
       console.error("Failed saving blog post to Firestore", e);
       return false;
+    }
+  }
+  return true;
+}
+
+export async function deleteBlogPost(slugOrId: string): Promise<boolean> {
+  const current = getStoredItems<BlogPost>(BLOGS_STORAGE_KEY, initialBlogPosts).filter(
+    b => b.id !== slugOrId && b.slug !== slugOrId
+  );
+  saveStoredItems(BLOGS_STORAGE_KEY, current, 'ne_dhanya_blogs_updated');
+  localBlogs = current;
+
+  if (isFirebaseConfigured && db) {
+    try {
+      await deleteDoc(doc(db, 'blogs', slugOrId));
+    } catch (e) {
+      console.error("Failed deleting blog post in Firestore", e);
     }
   }
   return true;
@@ -511,8 +558,6 @@ export async function updateEnquiryStatus(id: string, status: Enquiry['status'])
 }
 
 // REVIEWS & TESTIMONIALS
-const REVIEWS_STORAGE_KEY = 'ne_dhanya_reviews_cache';
-
 function getStoredLocalReviews(): Review[] {
   if (typeof window !== 'undefined') {
     try {
@@ -535,6 +580,7 @@ function saveStoredLocalReviews(reviews: Review[]) {
     try {
       localStorage.setItem(REVIEWS_STORAGE_KEY, JSON.stringify(reviews));
       window.dispatchEvent(new Event('ne_dhanya_reviews_updated'));
+      fetch('/api/admin/revalidate', { method: 'POST' }).catch(() => {});
     } catch (e) {
       console.warn("Could not save to local reviews cache", e);
     }
@@ -542,8 +588,6 @@ function saveStoredLocalReviews(reviews: Review[]) {
 }
 
 export async function getAllReviews(): Promise<Review[]> {
-  const local = getStoredLocalReviews();
-
   if (isFirebaseConfigured && db) {
     try {
       const snap = await getDocs(collection(db, 'reviews'));
@@ -558,28 +602,16 @@ export async function getAllReviews(): Promise<Review[]> {
           })
           .filter(r => r && (r.name || r.review));
 
-        // Merge: Never let older Firestore data overwrite a locally approved review
-        const merged = firestoreReviews.map(fr => {
-          const localMatch = local.find(lr => lr.id === fr.id);
-          if (localMatch && localMatch.status === 'approved' && fr.status !== 'approved') {
-            return { ...fr, status: 'approved' as const };
-          }
-          return fr;
-        });
-
-        const firestoreIds = new Set(merged.map(r => r.id));
-        const localOnly = local.filter(r => !firestoreIds.has(r.id));
-        const finalReviews = [...localOnly, ...merged].filter(r => r && (r.name || r.review));
-
-        saveStoredLocalReviews(finalReviews);
-        localReviews = finalReviews;
-        return finalReviews;
+        setSilentStorage(REVIEWS_STORAGE_KEY, firestoreReviews);
+        localReviews = firestoreReviews;
+        return firestoreReviews;
       }
     } catch (e) {
       console.warn("Failed fetching reviews from Firestore, using persistent local fallback", e);
     }
   }
 
+  const local = getStoredLocalReviews();
   localReviews = local;
   return local;
 }
@@ -650,7 +682,6 @@ export async function deleteReview(id: string): Promise<boolean> {
   const current = getStoredLocalReviews().filter(r => r.id !== id);
   saveStoredLocalReviews(current);
   localReviews = current;
-
   if (isFirebaseConfigured && db) {
     try {
       await deleteDoc(doc(db, 'reviews', id));

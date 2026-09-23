@@ -20,7 +20,8 @@ import {
   getAllDestinations, 
   getAllPackages, 
   getAllVehicles, 
-  getAllBlogPosts 
+  getAllBlogPosts,
+  getAllTouristPlaces
 } from "@/lib/firebase/dataBridge";
 import { createWhatsAppLink, getGeneralEnquiryMessage } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
@@ -34,12 +35,18 @@ import { FAQAccordion } from "@/components/public/FAQAccordion";
 import { TestimonialSlider } from "@/components/public/TestimonialSlider";
 import { HomeHotelSection } from "@/components/public/HomeHotelSection";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function HomePage() {
-  const settings = await getSiteSettings();
-  const destinations = await getAllDestinations();
-  const packages = await getAllPackages();
-  const vehicles = await getAllVehicles();
-  const blogs = await getAllBlogPosts();
+  const [settings, destinations, packages, vehicles, blogs, places] = await Promise.all([
+    getSiteSettings(),
+    getAllDestinations(),
+    getAllPackages(),
+    getAllVehicles(),
+    getAllBlogPosts(),
+    getAllTouristPlaces()
+  ]);
 
   const heroWhatsAppUrl = createWhatsAppLink(
     settings.whatsappNumber,
@@ -132,9 +139,11 @@ export default async function HomePage() {
           </div>
 
           {/* Trip Planner Widget */}
-          <div className="mt-12 text-left">
-            <TripSearchWidget whatsappNumber={settings.whatsappNumber} />
-          </div>
+            <TripSearchWidget 
+              whatsappNumber={settings.whatsappNumber} 
+              destinations={destinations}
+              places={places}
+            />
 
         </div>
 

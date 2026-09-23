@@ -12,11 +12,15 @@ import {
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { createWhatsAppLink, getTripSearchMessage } from "@/lib/whatsapp";
 
+import { Destination, TouristPlace } from "@/types";
+
 interface TripSearchWidgetProps {
   whatsappNumber: string;
+  destinations?: Destination[];
+  places?: TouristPlace[];
 }
 
-// Comprehensive destination to tourist places mapping
+// Comprehensive destination to tourist places mapping fallback
 const destinationPlacesMap: Record<string, string[]> = {
   "Meghalaya": [
     "Shillong (Scotland of East)",
@@ -99,9 +103,24 @@ const destinationPlacesMap: Record<string, string[]> = {
   ]
 };
 
-const destinationsList = Object.keys(destinationPlacesMap);
+export const TripSearchWidget: React.FC<TripSearchWidgetProps> = ({ whatsappNumber, destinations, places }) => {
+  const activeDestMap = React.useMemo(() => {
+    const map: Record<string, string[]> = { ...destinationPlacesMap };
+    if (destinations && destinations.length > 0) {
+      destinations.forEach(d => {
+        const destPlaces = places ? places.filter(p => p.destinationSlug.toLowerCase() === d.slug.toLowerCase()) : [];
+        if (destPlaces.length > 0) {
+          map[d.name] = destPlaces.map(p => p.name);
+        } else if (!map[d.name]) {
+          map[d.name] = [`Explore ${d.name}`];
+        }
+      });
+    }
+    return map;
+  }, [destinations, places]);
 
-export const TripSearchWidget: React.FC<TripSearchWidgetProps> = ({ whatsappNumber }) => {
+  const destinationsList = Object.keys(activeDestMap);
+
   const [destination, setDestination] = useState("Meghalaya");
   const [selectedPlaces, setSelectedPlaces] = useState<string[]>([
     "Shillong (Scotland of East)",
@@ -116,8 +135,8 @@ export const TripSearchWidget: React.FC<TripSearchWidgetProps> = ({ whatsappNumb
   const handleDestinationChange = (newDest: string) => {
     setDestination(newDest);
     // Pre-select top 2-3 popular places for that destination
-    const places = destinationPlacesMap[newDest] || [];
-    setSelectedPlaces(places.slice(0, 3));
+    const placesForDest = activeDestMap[newDest] || [];
+    setSelectedPlaces(placesForDest.slice(0, 3));
   };
 
   const togglePlace = (place: string) => {
@@ -129,7 +148,7 @@ export const TripSearchWidget: React.FC<TripSearchWidgetProps> = ({ whatsappNumb
   };
 
   const handleSelectAllPlaces = () => {
-    const all = destinationPlacesMap[destination] || [];
+    const all = activeDestMap[destination] || [];
     setSelectedPlaces(all);
   };
 

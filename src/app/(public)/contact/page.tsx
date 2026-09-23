@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   Phone, 
   Mail, 
@@ -13,15 +13,22 @@ import {
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { Breadcrumbs } from "@/components/public/Breadcrumbs";
 import { createWhatsAppLink } from "@/lib/whatsapp";
-import { submitEnquiry } from "@/lib/firebase/dataBridge";
+import { submitEnquiry, getSiteSettings } from "@/lib/firebase/dataBridge";
+import { SiteSettings } from "@/types";
 
 export default function ContactPage() {
-  const whatsappNumber = "919387843282";
-  const phoneNumber = "+91 93878 43282";
-  const secondaryPhoneNumber = "+91 98640 66495";
-  const email = "munin.ghy123@gmail.com";
-  const address = "Guwahati, Assam, India - 781001 (Gateway to Northeast India)";
-  const businessHours = "Monday - Sunday: 7:00 AM - 10:00 PM (WhatsApp Support 24/7)";
+  const [siteSettings, setSiteSettings] = useState<SiteSettings | null>(null);
+
+  useEffect(() => {
+    getSiteSettings().then(setSiteSettings);
+  }, []);
+
+  const whatsappNumber = siteSettings?.whatsappNumber || "919387843282";
+  const phoneNumber = siteSettings?.phoneNumber || "+91 93878 43282";
+  const secondaryPhoneNumber = siteSettings?.secondaryPhoneNumber || "+91 98640 66495";
+  const email = siteSettings?.email || "munin.ghy123@gmail.com";
+  const address = siteSettings?.address || "Guwahati, Assam, India - 781001 (Gateway to Northeast India)";
+  const businessHours = siteSettings?.businessHours || "Monday - Sunday: 7:00 AM - 10:00 PM (WhatsApp Support 24/7)";
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");

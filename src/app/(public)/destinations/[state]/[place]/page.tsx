@@ -34,6 +34,9 @@ interface Props {
   };
 }
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const place = await getTouristPlaceBySlug(params.state, params.place);
   if (!place) return {};

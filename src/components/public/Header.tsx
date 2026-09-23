@@ -15,14 +15,15 @@ import {
   ChevronDown 
 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
-import { SiteSettings } from "@/types";
+import { SiteSettings, Destination } from "@/types";
 import { createWhatsAppLink, getGeneralEnquiryMessage } from "@/lib/whatsapp";
 
 interface HeaderProps {
   settings: SiteSettings;
+  destinations?: Destination[];
 }
 
-export const Header: React.FC<HeaderProps> = ({ settings }) => {
+export const Header: React.FC<HeaderProps> = ({ settings, destinations }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [destDropdownOpen, setDestDropdownOpen] = useState(false);
@@ -40,16 +41,18 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
     getGeneralEnquiryMessage()
   );
 
-  const states = [
-    { name: "Meghalaya", slug: "meghalaya" },
-    { name: "Assam", slug: "assam" },
-    { name: "Arunachal Pradesh", slug: "arunachal-pradesh" },
-    { name: "Sikkim", slug: "sikkim" },
-    { name: "Nagaland", slug: "nagaland" },
-    { name: "Bhutan", slug: "bhutan" },
-    { name: "Mizoram", slug: "mizoram" },
-    { name: "Tripura", slug: "tripura" },
-  ];
+  const navDestinations = destinations && destinations.length > 0
+    ? destinations.map(d => ({ name: d.name, slug: d.slug }))
+    : [
+        { name: "Meghalaya", slug: "meghalaya" },
+        { name: "Assam", slug: "assam" },
+        { name: "Arunachal Pradesh", slug: "arunachal-pradesh" },
+        { name: "Sikkim", slug: "sikkim" },
+        { name: "Nagaland", slug: "nagaland" },
+        { name: "Bhutan", slug: "bhutan" },
+        { name: "Mizoram", slug: "mizoram" },
+        { name: "Tripura", slug: "tripura" },
+      ];
 
   return (
     <header 
@@ -103,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
                 <div className="text-[11px] font-semibold tracking-wider text-slate-400 uppercase px-3 py-1">
                   Northeast States & Bhutan
                 </div>
-                {states.map((s) => (
+                {navDestinations.map((s) => (
                   <Link
                     key={s.slug}
                     href={`/destinations/${s.slug}`}
@@ -240,7 +243,7 @@ export const Header: React.FC<HeaderProps> = ({ settings }) => {
                 Northeast Destinations
               </div>
               <div className="grid grid-cols-2 gap-1.5 pt-1 pl-2">
-                {states.map((s) => (
+                {navDestinations.map((s) => (
                   <Link
                     key={s.slug}
                     href={`/destinations/${s.slug}`}
