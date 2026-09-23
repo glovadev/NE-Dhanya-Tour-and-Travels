@@ -276,14 +276,20 @@ export const TestimonialSlider: React.FC<TestimonialSliderProps> = ({ whatsappNu
             {/* Reviewer Profile & Rating */}
             <div className="flex items-center justify-between pt-6 border-t border-slate-100 flex-wrap gap-4">
               <div className="flex items-center gap-3.5">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-500/30 shadow-sm shrink-0">
-                  <Image
-                    src={current.avatar}
-                    alt={current.name}
-                    fill
-                    unoptimized
-                    className="object-cover"
-                  />
+                <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-500/30 shadow-sm shrink-0 bg-emerald-50">
+                  {current.avatar ? (
+                    <Image
+                      src={current.avatar}
+                      alt={current.name || "Traveler"}
+                      fill
+                      unoptimized
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-xs font-bold text-emerald-800 bg-emerald-100">
+                      {((current.name || "Guest").trim() || "G").slice(0, 2).toUpperCase()}
+                    </div>
+                  )}
                 </div>
                 <div>
                   <h4 className="text-sm sm:text-base font-bold text-slate-900 leading-tight">

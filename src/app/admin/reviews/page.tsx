@@ -110,11 +110,12 @@ export default function AdminReviewsPage() {
     }
   };
 
-  const pendingCount = reviews.filter(r => r.status === "pending").length;
-  const approvedCount = reviews.filter(r => r.status === "approved").length;
-  const rejectedCount = reviews.filter(r => r.status === "rejected").length;
+  const validReviews = Array.isArray(reviews) ? reviews.filter(r => r && typeof r === "object") : [];
+  const pendingCount = validReviews.filter(r => r.status === "pending").length;
+  const approvedCount = validReviews.filter(r => r.status === "approved").length;
+  const rejectedCount = validReviews.filter(r => r.status === "rejected").length;
 
-  const filteredReviews = reviews.filter(r => {
+  const filteredReviews = validReviews.filter(r => {
     if (filter === "all") return true;
     return r.status === filter;
   });
@@ -284,24 +285,24 @@ export default function AdminReviewsPage() {
                       {r.avatar ? (
                         <Image
                           src={r.avatar}
-                          alt={r.name}
+                          alt={r.name || "User"}
                           fill
                           unoptimized
                           className="object-cover"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-xs font-bold text-emerald-400">
-                          {r.name.slice(0, 2).toUpperCase()}
+                          {((r.name || "Guest").trim() || "G").slice(0, 2).toUpperCase()}
                         </div>
                       )}
                     </div>
                     <div>
                       <h4 className="text-sm sm:text-base font-bold text-white leading-tight">
-                        {r.name}
+                        {r.name || "Anonymous Guest"}
                       </h4>
                       <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
                         <MapPin className="w-3 h-3 text-slate-500" />
-                        <span>{r.location}</span>
+                        <span>{r.location || "Northeast India"}</span>
                       </p>
                     </div>
                   </div>
@@ -332,13 +333,13 @@ export default function AdminReviewsPage() {
                 {/* Rating & Tags */}
                 <div className="flex flex-wrap items-center gap-2">
                   <div className="flex text-amber-400">
-                    {[...Array(r.rating || 5)].map((_, i) => (
+                    {[...Array(Math.max(1, Math.min(5, r.rating || 5)))].map((_, i) => (
                       <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                     ))}
                   </div>
                   <span className="text-xs text-slate-400">•</span>
                   <span className="text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded-full">
-                    {r.tourName}
+                    {r.tourName || "Custom Tour"}
                   </span>
                   {r.travelMode && (
                     <span className="text-[11px] text-slate-400 bg-slate-900 px-2 py-0.5 rounded-full border border-slate-800">
@@ -356,13 +357,13 @@ export default function AdminReviewsPage() {
 
                 {/* Review Text */}
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed bg-slate-900/60 p-3.5 rounded-2xl border border-slate-900 italic">
-                  &ldquo;{r.review}&rdquo;
+                  &ldquo;{r.review || "No review details provided."}&rdquo;
                 </p>
 
                 {/* Date */}
                 <div className="text-[11px] text-slate-500 flex items-center gap-1">
                   <Clock className="w-3 h-3" />
-                  <span>Submitted on {new Date(r.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</span>
+                  <span>Submitted on {r.createdAt ? new Date(r.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : "Recently"}</span>
                 </div>
 
               </div>
@@ -372,7 +373,7 @@ export default function AdminReviewsPage() {
                 <button
                   type="button"
                   disabled={processingId === r.id}
-                  onClick={() => handleDelete(r.id, r.name)}
+                  onClick={() => handleDelete(r.id, r.name || "this review")}
                   className="p-2 rounded-xl text-slate-500 hover:text-rose-400 hover:bg-slate-900 transition-colors"
                   title="Delete Review"
                 >

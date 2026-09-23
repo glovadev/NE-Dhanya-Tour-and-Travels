@@ -520,7 +520,7 @@ function getStoredLocalReviews(): Review[] {
       if (stored) {
         const parsed = JSON.parse(stored);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
+          return parsed.filter(r => r && (r.name || r.review));
         }
       }
     } catch (e) {
@@ -548,13 +548,15 @@ export async function getAllReviews(): Promise<Review[]> {
     try {
       const snap = await getDocs(collection(db, 'reviews'));
       if (!snap.empty) {
-        const firestoreReviews = snap.docs.map(d => {
-          const data = d.data();
-          return {
-            ...data,
-            id: data.id || d.id
-          } as Review;
-        });
+        const firestoreReviews = snap.docs
+          .map(d => {
+            const data = d.data();
+            return {
+              ...data,
+              id: data.id || d.id
+            } as Review;
+          })
+          .filter(r => r && (r.name || r.review));
 
         // Merge: Never let older Firestore data overwrite a locally approved review
         const merged = firestoreReviews.map(fr => {
@@ -567,7 +569,7 @@ export async function getAllReviews(): Promise<Review[]> {
 
         const firestoreIds = new Set(merged.map(r => r.id));
         const localOnly = local.filter(r => !firestoreIds.has(r.id));
-        const finalReviews = [...localOnly, ...merged];
+        const finalReviews = [...localOnly, ...merged].filter(r => r && (r.name || r.review));
 
         saveStoredLocalReviews(finalReviews);
         localReviews = finalReviews;
