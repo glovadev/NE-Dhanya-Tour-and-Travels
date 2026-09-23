@@ -31,7 +31,7 @@ export const HomeHotelSection: React.FC<HomeHotelSectionProps> = ({ whatsappNumb
         {/* Cinematic Resort Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/hotel-resort-bg.jpg"
+            src="https://res.cloudinary.com/bpi3s64e/image/upload/v1790142043/ne_dhaniya_tours/hotel-resort-bg.jpg"
             alt="Luxury Mountain Resort & Boutique Cottages in Northeast India"
             fill
             className="object-cover object-center brightness-[0.45] contrast-[1.08] scale-105 transition-transform duration-1000"

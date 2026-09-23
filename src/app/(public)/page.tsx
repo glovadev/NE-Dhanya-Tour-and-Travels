@@ -78,7 +78,7 @@ export default async function HomePage() {
         {/* Cinematic Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/northeast-hero-bg.jpg"
+            src="https://res.cloudinary.com/bpi3s64e/image/upload/v1790142138/ne_dhaniya_tours/northeast-hero-bg.jpg"
             alt="Scenic Northeast India Himalayas, Tea Valleys, Waterfalls & Mountain Roads"
             fill
             priority

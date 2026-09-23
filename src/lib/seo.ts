@@ -9,7 +9,7 @@ export function getTravelAgencySchema(settings: SiteSettings) {
     "@id": `${SITE_URL}/#organization`,
     "name": settings.businessName,
     "url": SITE_URL,
-    "logo": `${SITE_URL}/images/logo-new.png`,
+    "logo": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142056/ne_dhaniya_tours/logo-new.png",
     "image": settings.defaultOgImage,
     "description": settings.defaultMetaDescription,
     "telephone": settings.phoneNumber,
@@ -117,7 +117,7 @@ export function getArticleSchema(blog: BlogPost) {
       "name": "NE Dhanya Tour and Travels",
       "logo": {
         "@type": "ImageObject",
-        "url": `${SITE_URL}/images/logo-new.png`
+        "url": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142056/ne_dhaniya_tours/logo-new.png"
       }
     },
     "mainEntityOfPage": {

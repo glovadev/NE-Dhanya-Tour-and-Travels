@@ -109,7 +109,7 @@ export const HotelBookingClient: React.FC<HotelBookingClientProps> = ({ whatsapp
         <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-slate-950 px-6 py-16 sm:px-12 sm:py-20 text-center text-white">
           <div className="absolute inset-0 z-0">
             <Image
-              src="/images/hotel-resort-bg.jpg"
+              src="https://res.cloudinary.com/bpi3s64e/image/upload/v1790142043/ne_dhaniya_tours/hotel-resort-bg.jpg"
               alt="Luxury Resort and Homestays Northeast India"
               fill
               priority

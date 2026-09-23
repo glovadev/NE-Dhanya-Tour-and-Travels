@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
         <div className="text-center mb-8">
           <div className="relative w-48 h-14 mx-auto mb-4">
             <Image 
-              src="/images/logo-new.png" 
+              src="https://res.cloudinary.com/bpi3s64e/image/upload/v1790142056/ne_dhaniya_tours/logo-new.png" 
               alt="NE Dhanya Tour and Travels" 
               fill 
               className="object-contain" 

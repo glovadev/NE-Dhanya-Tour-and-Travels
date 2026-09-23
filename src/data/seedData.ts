@@ -25,7 +25,7 @@ export const initialSiteSettings: SiteSettings = {
   },
   defaultMetaTitle: "NE Dhanya Tour and Travels | Northeast India Tour Packages, Car Rental & Taxi Services",
   defaultMetaDescription: "Explore Assam, Meghalaya, Arunachal, Sikkim, Nagaland & Bhutan with NE Dhanya Tour and Travels. Personal & sharing tours, premium car rental, hotel booking & 24/7 local support.",
-  defaultOgImage: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80",
+  defaultOgImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142248/ne_dhaniya_tours/external/cosxiwf46jixo6xt9dpa.jpg",
   websiteName: "NE Dhanya Tour and Travels",
 };
 
@@ -37,11 +37,11 @@ export const initialDestinations: Destination[] = [
     state: "Meghalaya",
     shortDescription: "The Abode of Clouds featuring roaring waterfalls, living root bridges, crystal clear rivers, and misty hill stations.",
     description: "Meghalaya, aptly known as the 'Abode of Clouds', is one of the most mesmerizing states in Northeast India. From the colonial charm and vibrant cafes of Shillong to the dramatic canyons and plunge falls of Cherrapunji (Sohra), the crystal-clear waters of Dawki's Umngot River, and the cleanest village of Mawlynnong, Meghalaya offers an unforgettable communion with untouched nature.",
-    heroImage: "/images/meghalaya.png",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142105/ne_dhaniya_tours/meghalaya.png",
     gallery: [
-      "https://images.unsplash.com/photo-1608889825103-eb5ed706fc64?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80"
+      "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142249/ne_dhaniya_tours/external/bmdhqk1fyhbqcbchwy5t.jpg",
+      "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142250/ne_dhaniya_tours/external/sfmvcuhvvxgevridwmqv.jpg",
+      "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142250/ne_dhaniya_tours/external/i01woofzmwjvbumjiphk.jpg"
     ],
     bestTimeToVisit: "October to April (for clear skies, trekking & crystal clear river waters); June to September for roaring monsoons and dramatic waterfalls.",
     howToReach: {
@@ -94,7 +94,7 @@ export const initialDestinations: Destination[] = [
     state: "Assam",
     shortDescription: "The gateway to Northeast India, famous for one-horned rhinos in Kaziranga, lush tea gardens, Brahmaputra river & Kamakhya Temple.",
     description: "Assam is the vibrant heart and natural gateway to Northeast India. Blessed by the mighty Brahmaputra river, Assam offers world-renowned wildlife sanctuaries like Kaziranga and Manas, the sacred spiritual aura of Maa Kamakhya Temple atop Nilachal Hill, the world's largest river island Majuli, the tea capital Jorhat, and historical Ahom kingdom monuments in Sivasagar.",
-    heroImage: "/images/assam.jpg",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142033/ne_dhaniya_tours/assam.jpg",
     bestTimeToVisit: "November to April, when Kaziranga and Manas National Parks are fully open for elephant and jeep safaris and the weather is pleasantly cool.",
     howToReach: {
       byAir: "Guwahati Airport (GAU) operates non-stop flights from Delhi, Mumbai, Kolkata, Bangalore, and major Indian metros. Other regional airports include Dibrugarh, Jorhat, and Tezpur.",
@@ -141,7 +141,7 @@ export const initialDestinations: Destination[] = [
     state: "Arunachal Pradesh",
     shortDescription: "The Land of the Dawn-Lit Mountains boasting snow-capped Himalayan passes, ancient Buddhist monasteries, Sela Pass & Tawang.",
     description: "Arunachal Pradesh is India's wildest and most pristine frontier. Ascending from the subtropical foothills of Bhalukpong into the alpine heights of Sela Pass (13,700 ft) and the spiritual sanctuary of Tawang Monastery, Arunachal enchants travellers with high-altitude lakes, sacred passes, vibrant tribal festivals in Ziro Valley, and dramatic Himalayan landscapes.",
-    heroImage: "/images/Arunachal-Pradesh.jpg",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142032/ne_dhaniya_tours/Arunachal-Pradesh.jpg",
     bestTimeToVisit: "March to May (for blooming rhododendrons and pleasant weather) and October to February (for clear mountain vistas and winter snow in Tawang and Sela Pass).",
     howToReach: {
       byAir: "Fly to Guwahati Airport (GAU) or Donyi Polo Airport in Itanagar (HGI). Guwahati is the most popular starting point for road trips to Western Arunachal (Tawang circuit).",
@@ -187,7 +187,7 @@ export const initialDestinations: Destination[] = [
     state: "Sikkim",
     shortDescription: "Majestic kingdom of Mount Kanchenjunga, sacred glacial lakes like Gurudongmar, Yumthang Valley of Flowers, and serene Buddhist monasteries.",
     description: "Nestled in the shadow of Mount Kanchenjunga (the world's third-highest peak), Sikkim is a tranquil haven of Buddhist spirituality, high-altitude alpine meadows, and pristine valleys. From the bustling pedestrian streets of MG Marg in Gangtok to the icy heights of Gurudongmar Lake and the thermal springs of Yumthang Valley, Sikkim is an ethereal Himalayan paradise.",
-    heroImage: "/images/sikkim.jpg",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142236/ne_dhaniya_tours/sikkim.jpg",
     bestTimeToVisit: "March to June for vibrant spring flowers and mild weather; October to December for crystal-clear Kanchenjunga views and winter snow in North Sikkim.",
     howToReach: {
       byAir: "Bagdogra Airport (IXB) in West Bengal is the primary gateway (approx 4 hours drive to Gangtok). Pakyong Airport (PYG) operates weather-dependent regional flights.",
@@ -233,7 +233,7 @@ export const initialDestinations: Destination[] = [
     state: "Nagaland",
     shortDescription: "Land of Festivals, brave warrior heritage, the rolling emerald slopes of Dzukou Valley, and the legendary Hornbill Festival.",
     description: "Nagaland is a land of vibrant indigenous cultures, untouched hills, and legendary hospitality. From the world-famous Hornbill Festival held every December at Kisama Heritage Village to the breathtaking rolling bamboo hills of Dzukou Valley and India's first green village Khonoma, Nagaland offers deeply immersive cultural and trekking experiences.",
-    heroImage: "/images/nagaland.avif",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142108/ne_dhaniya_tours/nagaland.avif",
     bestTimeToVisit: "October to May. December is the most popular month for the iconic Hornbill Festival (Dec 1-10); June to September is ideal for the blooming Dzukou Lily in Dzukou Valley.",
     howToReach: {
       byAir: "Dimapur Airport (DMU) is the only civil airport in Nagaland, connected to Kolkata, Guwahati, and Delhi.",
@@ -277,7 +277,7 @@ export const initialDestinations: Destination[] = [
     state: "Mizoram",
     shortDescription: "The Land of the Blue Mountains, serene hill ridges, dramatic Vantawng Falls, and warm Mizo cultural traditions.",
     description: "Perched along tranquil mountain ridges, Mizoram is one of Northeast India's most peaceful, literate, and ecologically rich destinations. Featuring the lively cliffside capital of Aizawl, the panoramic ridge views of Reiek and Hmuifang, the roaring multi-tiered Vantawng Falls, and serene mountain lakes, Mizoram is a paradise for travelers seeking calm authenticity.",
-    heroImage: "/images/mizoram.jpg",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142106/ne_dhaniya_tours/mizoram.jpg",
     bestTimeToVisit: "October to April, when the weather is crisp, sunny, and ideal for road travel and village excursions.",
     howToReach: {
       byAir: "Lengpui Airport (AJL) near Aizawl has scheduled direct flights from Kolkata and Guwahati.",
@@ -317,7 +317,7 @@ export const initialDestinations: Destination[] = [
     state: "Tripura",
     shortDescription: "A realm of royal heritage, majestic water palaces like Neermahal, ancient rock carvings at Unakoti, and vibrant cultural sanctuaries.",
     description: "Tripura seamlessly blends regal princely heritage with dense archaeological wonders and spiritual temples. The gleaming white facade of Ujjayanta Palace, the floating marvel of Neermahal situated amidst Rudrasagar Lake, the colossal 7th-9th century Shiva rock reliefs at Unakoti, and the sacred Tripura Sundari Temple make it a fascinating historical and cultural stop in Northeast India.",
-    heroImage: "/images/tripura.jpg",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142242/ne_dhaniya_tours/tripura.jpg",
     bestTimeToVisit: "October to March, when the climate is cool and comfortable for heritage palace sightseeing.",
     howToReach: {
       byAir: "Maharaja Bir Bikram Airport (IXA) in Agartala is Northeast India's second-busiest airport, with regular flights from Kolkata, Delhi, and Guwahati.",
@@ -357,7 +357,7 @@ export const initialDestinations: Destination[] = [
     state: "Bhutan",
     shortDescription: "The Land of the Thunder Dragon, Himalayan fortresses (Dzongs), cliffside Tiger's Nest Monastery, and high Gross National Happiness.",
     description: "Sharing friendly borders with Assam and West Bengal, the magical kingdom of Bhutan is a land of untouched Himalayan valleys, centuries-old Buddhist Dzongs, and serene mindfulness. From the iconic cliffside Paro Taktsang (Tiger's Nest) to the vibrant capital Thimphu, scenic Dochula Pass with 108 memorial stupas, and fertile Punakha Valley, Bhutan is an extraordinary international journey easily accessible from Northeast India.",
-    heroImage: "/images/bhutan.jpg",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142036/ne_dhaniya_tours/bhutan.jpg",
     bestTimeToVisit: "March to May (for pleasant weather and blooming valleys) and September to November (for clear skies, crisp mountain air, and colorful Tshechu festivals).",
     howToReach: {
       byAir: "Fly into Paro International Airport (PBH) on Drukair or Bhutan Airlines from Delhi, Kolkata, Guwahati, or Bagdogra.",
@@ -405,7 +405,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Assam",
     "shortDescription": "The gateway city of Northeast India, famous for Maa Kamakhya Temple, Brahmaputra river cruises & vibrant markets.",
     "description": "Guwahati is the bustling metropolitan gateway and commercial capital of Northeast India. Flanked by Nilachal Hill and the mighty Brahmaputra river, Guwahati blends ancient spiritual shaktipeeths like Kamakhya Temple and Umananda Peacock Island with scenic riverfront sunset cruises, museums, and rich silk markets.",
-    "heroImage": "/images/places-images/guwahati.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142156/ne_dhaniya_tours/guwahati.jpg",
     "topThingsToDo": [
       "Darshan and blessings at the sacred Kamakhya Temple atop Nilachal Hill",
       "Brahmaputra sunset dinner cruise with live folk music",
@@ -442,7 +442,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Assam",
     "shortDescription": "Revered Shaktipeeth shrine atop Nilachal Hill, spiritual epicenter of Tantric worship & panoramic Brahmaputra river views.",
     "description": "The revered Maa Kamakhya Temple, situated atop Nilachal Hill in Guwahati, is one of the oldest and most venerated of the 51 Shakti Peethas in Hindu spirituality. Dedicated to the mother goddess Kamakhya, the temple features unique bee-hive shaped architecture, ancient stone sculptures, and the sanctum containing the sacred natural rock fissure. It is the epicentre of the grand annual Ambubachi Mela and provides sweeping panoramic views over the Brahmaputra River.",
-    "heroImage": "/images/places-images/kamakhya.webp",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142167/ne_dhaniya_tours/kamakhya.webp",
     "topThingsToDo": [
       "Early morning VIP darshan at the sanctum sanctorum of Maa Kamakhya",
       "Visit the ten Mahavidya temples surrounding the Nilachal hill complex",
@@ -479,7 +479,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Assam",
     "shortDescription": "UNESCO World Heritage Site sheltering two-thirds of the world's great one-horned rhinoceroses.",
     "description": "Kaziranga National Park is a premier wildlife sanctuary stretching along the floodplains of the Brahmaputra River. In addition to harboring the world's highest density of one-horned rhinoceroses, Kaziranga is a tiger reserve, home to wild water buffaloes, Asian elephants, swamp deer, and hundreds of migratory bird species across Central, Western, Eastern, and Burapahar ranges.",
-    "heroImage": "/images/Kaziranga Wildlife Safari & Tea Trail.webp",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142044/ne_dhaniya_tours/Kaziranga_Wildlife_Safari___Tea_Trail.webp",
     "topThingsToDo": [
       "Early morning Elephant Safari in Kohora or Bagori range for up-close rhino sightings",
       "Jeep Safari across Western and Eastern (Agoratoli) ranges for birds and wild buffaloes",
@@ -516,7 +516,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Assam",
     "shortDescription": "UNESCO World Heritage Site, Project Tiger reserve & biosphere on Bhutan foothills, famed for golden langurs & river rafting.",
     "description": "Nestled in the serene Himalayan foothills contiguous with the Royal Manas National Park in Bhutan, Manas National Park is celebrated for its exceptional biodiversity and scenic beauty. It is a UNESCO World Heritage Site, Tiger Reserve, Elephant Reserve, and Biosphere Reserve. Manas shelters rare and endangered species including the endemic Golden Langur, Pygmy Hog, Hispid Hare, and Wild Water Buffalo, along with river rafting adventures down the pristine Manas River.",
-    "heroImage": "/images/places-images/manash national park.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142177/ne_dhaniya_tours/manash_national_park.jpg",
     "topThingsToDo": [
       "Open-top 4x4 Jeep Safari across the lush Bansbari and Bhuyanpara ranges",
       "Gentle river rafting on the crystal-clear waters of the Manas River along the Indo-Bhutan border",
@@ -553,7 +553,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Assam",
     "shortDescription": "The world's largest inhabited river island on Brahmaputra, neo-Vaishnavite Satras, traditional mask-making & Mishing tribal culture.",
     "description": "Majuli is an ethereal ecological and cultural wonder situated in the middle of the mighty Brahmaputra river. As the world's largest river island, Majuli is the heart of Assamese neo-Vaishnavite philosophy, home to historic Satras (monasteries) dating back to the 15th-century saint Srimanta Sankardeva. Famous for traditional handmade bamboo and clay masks at Samaguri Satra, classical Sattriya dance, pottery, and picturesque Mishing stilt houses, Majuli offers an idyllic escape into tranquility.",
-    "heroImage": "/images/places-images/majuli.webp",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142176/ne_dhaniya_tours/majuli.webp",
     "topThingsToDo": [
       "Ferry ride across the Brahmaputra River from Nimati Ghat (Jorhat)",
       "Witness traditional mask making by master artisans at Sri Sri Samaguri Satra",
@@ -590,7 +590,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Assam",
     "shortDescription": "Historical capital of the 600-year Ahom Kingdom, Rang Ghar amphitheatre, Talatal Ghar palace & massive Sivadol temple.",
     "description": "Sivasagar (the Ocean of Lord Shiva) is the historic epicenter of Assam's royal heritage. For over six centuries, Sivasagar served as the capital of the valiant Ahom dynasty who famously defeated Mughal invasions. Today, Sivasagar showcases marvels of medieval engineering: the two-storied royal pavilion Rang Ghar (Asia's oldest surviving amphitheater), the subterranean secret maze tunnels of Talatal Ghar, the royal palace Kareng Ghar at Gargaon, and the colossal Sivadol temple towering beside the vast man-made Sivasagar water tank.",
-    "heroImage": "/images/places-images/sivsagar.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142209/ne_dhaniya_tours/sivsagar.jpg",
     "topThingsToDo": [
       "Marvel at the grand architecture of Rang Ghar, the royal sports pavilion of Ahom kings",
       "Explore the underground secret passages and military design of Talatal Ghar",
@@ -627,7 +627,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Assam",
     "shortDescription": "The Tea Capital of India, colonial tea estate bungalows, Tocklai Tea Research Institute & gateway to Majuli.",
     "description": "Known proudly as the Tea Capital of the World, Jorhat is enveloped by emerald oceans of manicured tea plantations and colonial planters' heritage. It is home to the historic Tocklai Tea Research Association (the world's oldest and largest tea research institute) and the century-old Jorhat Gymkhana Club. Serving as the primary gateway to the river island of Majuli, Jorhat combines colonial charm, world-class orthodox tea tasting, and cultural warmth.",
-    "heroImage": "/images/places-images/zorhat.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142232/ne_dhaniya_tours/zorhat.jpg",
     "topThingsToDo": [
       "Tour rolling tea estates and learn traditional orthodox tea plucking and processing",
       "Stay in a restored British colonial tea planter's heritage bungalow",
@@ -664,7 +664,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Assam",
     "shortDescription": "Assam's only hill station, emerald green rolling peaks, Haflong Lake, misty valleys & Jatinga bird phenomenon.",
     "description": "Perched at an elevation of 2,300 feet amidst the Borail mountain range in Dima Hasao, Haflong is affectionately hailed as the 'Switzerland of the East' and is Assam's only hill station. Characterized by cool breezes, mist-shrouded valleys, scenic Haflong Lake, sprawling pineapple and orange orchards, and rich Dimasa tribal culture, Haflong offers an enchanting offbeat mountain retreat. Nearby Jatinga is globally renowned for its mysterious migratory bird phenomenon during late monsoons.",
-    "heroImage": "/images/northeast-hero-bg.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142138/ne_dhaniya_tours/northeast-hero-bg.jpg",
     "topThingsToDo": [
       "Boat ride and leisurely stroll along picturesque Haflong Lake and hanging footbridge",
       "Witness panoramic views of the Borail mountain ranges from Haflong View Point",
@@ -701,7 +701,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Assam",
     "shortDescription": "Highest density of one-horned rhinos in the world, just 45 km from Guwahati, grassland safaris & birdwatching.",
     "description": "Located just a scenic 1.5-hour drive from Guwahati along the Brahmaputra floodplains, Pobitora Wildlife Sanctuary boasts the highest ecological density of the Great Indian One-Horned Rhinoceros anywhere on earth. Spanning grasslands, wetlands, and hillocks, Pobitora is ideal for travelers on tight schedules seeking guaranteed close-range rhino sightings on early morning elephant and open jeep safaris, alongside over 375 species of resident and migratory birds.",
-    "heroImage": "/images/places-images/pobitora.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142199/ne_dhaniya_tours/pobitora.jpg",
     "topThingsToDo": [
       "Early morning elephant safari for guaranteed sightings of one-horned rhinos in tall elephant grass",
       "Open 4x4 jeep safari across grassland tracks and Haduk Hanging Bridge",
@@ -738,7 +738,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Meghalaya",
     "shortDescription": "The Scotland of the East featuring pine-covered hills, lively Police Bazar, Umiam Lake, and colonial charm.",
     "description": "Shillong, the capital of Meghalaya, sits amidst pine-clad mountains and gentle rolling hills that earned it the moniker 'Scotland of the East'. With its vibrant music culture, cafe scene, bustling Police Bazar, scenic golf course, and historic heritage, Shillong serves as the primary base for exploring Meghalaya.",
-    "heroImage": "/images/places-images/shilong.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142207/ne_dhaniya_tours/shilong.jpg",
     "topThingsToDo": [
       "Boating and sunset watching at picturesque Umiam Lake",
       "Shopping and tasting local street food at Police Bazar & Ward's Lake",
@@ -775,7 +775,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Meghalaya",
     "shortDescription": "Dramatic limestone gorges, misty canyons, Nohkalikai Falls, and living root bridges.",
     "description": "Known locally as Sohra, Cherrapunji is globally famous for its historic rainfall records, dramatic cloud formations, and dramatic canyon drops. It is home to India's tallest plunge waterfall (Nohkalikai Falls), the mystical Seven Sisters Falls, Mawsmai limestone cave, and the trailheads descending to the legendary Double Decker Living Root Bridge.",
-    "heroImage": "/images/Meghalaya Scenic Escape.webp",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142085/ne_dhaniya_tours/Meghalaya_Scenic_Escape.webp",
     "topThingsToDo": [
       "Marvel at the turquoise plunge pool of Nohkalikai Falls",
       "Explore the natural stalactites and stalagmites of Mawsmai Cave",
@@ -812,7 +812,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Meghalaya",
     "shortDescription": "Crystal clear Umngot River where boats appear to float in mid-air, riverside camping & water sports.",
     "description": "Dawki is a picturesque border town famous for the crystal-clear Umngot River, where the water is so transparent during winter months that boats seem to hover in the air. A short distance away, Shnongpdeng offers pebble-beach riverside camping, kayaking, cliff jumping, and serene stargazing under dark mountain skies.",
-    "heroImage": "/images/places-images/dawki.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142145/ne_dhaniya_tours/dawki.jpg",
     "topThingsToDo": [
       "Country boat ride on the glass-like waters of the Umngot River",
       "Camping in riverside tents at Shnongpdeng village",
@@ -849,7 +849,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Meghalaya",
     "shortDescription": "Celebrated as Asia's Cleanest Village, single-decker living root bridge in Riwai & pristine bamboo skywalk.",
     "description": "Honored by Discover India as 'Asia's Cleanest Village', Mawlynnong is a peaceful rural paradise nestled in the East Khasi Hills. Paved with cobblestone pathways, bamboo waste bins, and blooming orchids, the village showcases centuries-old Khasi matrilineal culture. Nearby Riwai village hosts an accessible Single Decker Living Root Bridge, and the Sky Walk provides panoramic views into the floodplains of Bangladesh.",
-    "heroImage": "/images/places-images/mawlynnong.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142178/ne_dhaniya_tours/mawlynnong.jpg",
     "topThingsToDo": [
       "Walk across the ancient Single Decker Living Root Bridge in neighbouring Riwai",
       "Climb the 85-foot bamboo machan (Sky Walk) overlooking Bangladesh",
@@ -923,7 +923,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Meghalaya",
     "shortDescription": "Iconic 3,500-step jungle staircase trek to the 200-year-old Double Decker Living Root Bridge & Rainbow Falls.",
     "description": "Deep in the tropical valleys of Cherrapunji lies the village of Nongriat, renowned worldwide for its extraordinary bio-engineering marvel: the Jingkieng Nongriat (Double Decker Living Root Bridge). Handcrafted by Khasi ancestors across centuries using the living aerial roots of Ficus elastica rubber trees, this two-tier bridge spans a roaring crystal mountain river. Further upstream lies the breathtaking turquoise pool of Rainbow Falls.",
-    "heroImage": "/images/places-images/Nongriate to double docker.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142185/ne_dhaniya_tours/Nongriate_to_double_docker.jpg",
     "topThingsToDo": [
       "Descend the exhilarating 3,500-step stone staircase trek starting from Tyrna village",
       "Cross the ancient Double Decker Living Root Bridge and feel the living root structure",
@@ -960,7 +960,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Meghalaya",
     "shortDescription": "Fairytale waterfall in Jowai featuring an iridescent turquoise natural swimming pool, cave path & boating.",
     "description": "Tucked away in the West Jaintia Hills near Amlarem, Krang Suri is arguably the most magical waterfall in Northeast India. The waterfall pours gracefully over a broad limestone ledge into a natural turquoise swimming pool so vibrant it appears illuminated. A stone-carved pathway chiseled into the cliff allows visitors to walk safely behind the waterfall curtain.",
-    "heroImage": "/images/places-images/Krang suri falls.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142174/ne_dhaniya_tours/Krang_suri_falls.jpg",
     "topThingsToDo": [
       "Swim in the safe, crystal-clear turquoise natural plunge pool (life jackets mandatory)",
       "Walk along the stone trail behind the roaring curtain of falling water",
@@ -997,7 +997,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Meghalaya",
     "shortDescription": "Riverside adventure hub on the Umngot River, pebble beach tents, kayaking, cliff jumping & suspension bridge.",
     "description": "Located just 7 km upstream from Dawki border, Shnongpdeng is a tranquil Khasi tribal village that has emerged as the adventure and glamping heart of Meghalaya. Nestled along the crystal-clear pebble shores of the Umngot River, Shnongpdeng offers night bonfires by riverside tents, cliff diving into emerald deeps, kayaking, zip-lining, and a dramatic suspension bridge.",
-    "heroImage": "/images/places-images/shnongpdeng.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142208/ne_dhaniya_tours/shnongpdeng.jpg",
     "topThingsToDo": [
       "Camp under a canopy of stars in cozy tents along the pebble riverbank",
       "Kayak on the glass-like waters of the Umngot River",
@@ -1034,7 +1034,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Meghalaya",
     "shortDescription": "Picturesque mountain reservoir (Barapani) fringed by pine groves, watersports, kayaking & luxury resort sunsets.",
     "description": "Popularly known as Barapani (Big Water), Umiam Lake is an expansive, tranquil reservoir nestled in the hills just 15 km north of Shillong. Created by damming the Umiam River in the 1960s, the lake resembles the scenic lochs of Scotland, with serene islands, sylvan pine promontories, watersports complexes offering speedboating and kayaking, and panoramic sunset views.",
-    "heroImage": "/images/places-images/umiam.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142226/ne_dhaniya_tours/umiam.jpg",
     "topThingsToDo": [
       "Speedboating, water skiing, and cruising at the Umiam Water Sports Complex",
       "Enjoy a scenic lakeside lunch overlooking the water at Orchid Lake Resort",
@@ -1071,7 +1071,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Arunachal Pradesh",
     "shortDescription": "High-altitude Himalayan wonder boasting India's largest Buddhist monastery, Bumla Pass & Sela Pass.",
     "description": "Perched at an elevation of approximately 10,000 feet near the borders of Tibet and Bhutan, Tawang is an awe-inspiring mountain destination. It is celebrated for the 400-year-old Tawang Monastery (Galden Namgey Lhatse), the sacred high-altitude Sangetsar (Madhuri) Lake, the Indo-China border at Bumla Pass (15,200 ft), and the heroic Jaswant Garh War Memorial.",
-    "heroImage": "/images/places-images/tawang.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142214/ne_dhaniya_tours/tawang.jpg",
     "topThingsToDo": [
       "Pay respects at Tawang Monastery and explore its ancient museum and library",
       "Drive across Sela Pass (13,700 ft) and pause by the frozen Sela Lake",
@@ -1108,7 +1108,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Arunachal Pradesh",
     "shortDescription": "Hilltown perched at 8,500 ft, panoramic snow-capped Kangto & Gorichen viewpoints, apple orchards & monasteries.",
     "description": "Perched at an elevation of 8,500 feet amidst towering alpine terrain, Bomdila is the administrative headquarters of West Kameng district. Known for its cool mountain air, vibrant apple and kiwi orchards, and three prominent Buddhist monasteries (Gentse Gaden Rabgyel Lling), Bomdila provides sweeping vistas of the snow-clad Kangto and Gorichen Himalayan peaks.",
-    "heroImage": "/images/places-images/Bomdila.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142141/ne_dhaniya_tours/Bomdila.jpg",
     "topThingsToDo": [
       "Visit the Upper Gompa (GRL Monastery) for morning prayer chants and valley views",
       "Shop for authentic traditional Monpa woollen carpets and wooden thangkas at the Craft Centre",
@@ -1145,7 +1145,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Arunachal Pradesh",
     "shortDescription": "Picturesque temperate mountain valley, kiwi orchards, hot water springs, Dirang Dzong & Sangti Valley.",
     "description": "Resting gracefully at 4,900 feet in West Kameng, Dirang is a postcard-perfect mountain valley known for its pleasant microclimate, kiwi and apple orchards, and historical Monpa tribal settlements. Highlights include the 17th-century stone fortress Dirang Dzong, natural hot sulfur water springs, the Thupsung Dhargye Ling Monastery, and the idyllic Sangti Valley where rare Black-Necked Cranes winter.",
-    "heroImage": "/images/places-images/dirang.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142147/ne_dhaniya_tours/dirang.jpg",
     "topThingsToDo": [
       "Explore the 500-year-old stone architecture of Dirang Dzong",
       "Dip your feet into therapeutic natural hot springs along the Dirang River",
@@ -1182,7 +1182,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Arunachal Pradesh",
     "shortDescription": "High-altitude mountain pass at 13,700 ft, frozen turquoise lake, 101 sacred lakes & Jaswant Garh War Memorial.",
     "description": "Sela Pass, situated at a breathtaking elevation of 13,700 feet (4,170 m), is the lifeline mountain pass connecting Tawang to the rest of India. Capped in snow for most of the year, the pass is home to the sacred Sela Lake (Paradise Lake), reverently believed by Buddhists to be surrounded by 101 sacred lakes. Nearby lies the revered Jaswant Garh War Memorial, honoring rifleman Jaswant Singh Rawat of the 1962 Sino-Indian War.",
-    "heroImage": "/images/Arunachal-Pradesh.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142032/ne_dhaniya_tours/Arunachal-Pradesh.jpg",
     "topThingsToDo": [
       "Photo stop at the iconic Sela Pass gateway gate draped in colorful Buddhist prayer flags",
       "Witness the partially frozen turquoise waters of Sela Lake",
@@ -1219,7 +1219,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Arunachal Pradesh",
     "shortDescription": "Historic Indo-China border at 15,200 ft, Heap of Stones & breathtaking Sangetsar (Madhuri) Lake.",
     "description": "Located 37 km from Tawang at an altitude of 15,200 feet along the McMahon Line, Bumla Pass marks the official Indo-China international border. Visitors can interact warmly with Indian Army jawans, see the Chinese border outpost, and place a pebble on the Heap of Stones for peace. On the return route lies Sangetsar Lake (popularly called Madhuri Lake), formed by an earthquake and famed for tree trunks standing amidst glacial waters.",
-    "heroImage": "/images/places-images/bumla pass.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142143/ne_dhaniya_tours/bumla_pass.jpg",
     "topThingsToDo": [
       "Stand on the historic Indo-China border line and interact with brave Indian Army personnel",
       "Place a pebble on the Heap of Stones monument for world peace",
@@ -1256,7 +1256,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Arunachal Pradesh",
     "shortDescription": "UNESCO tentative world heritage landscape, Apatani tribal culture, pine groves & Ziro Music Festival.",
     "description": "Cradled by rolling pine-covered hills in Lower Subansiri district, Ziro Valley is one of India's most culturally distinct destinations. Inscribed on the tentative UNESCO list, Ziro is the ancestral home of the hospitable Apatani tribe, celebrated for their unique facial tattoos, nose plugs (Yaping Hullo), sustainable wet-rice-cum-pisciculture, and the world-renowned open-air Ziro Festival of Music held every September.",
-    "heroImage": "/images/places-images/Ziro Valley.avif",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142230/ne_dhaniya_tours/Ziro_Valley.avif",
     "topThingsToDo": [
       "Guided village walk through Hong, Hari, and Bulla to interact with Apatani elders",
       "Attend the vibrant open-air indie Ziro Festival of Music in late September",
@@ -1293,7 +1293,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Arunachal Pradesh",
     "shortDescription": "Thunderous 100-meter drop pristine waterfall cascading into the Tawang River near Jang town.",
     "description": "Plunging 100 meters down a sheer granite cliff, Nuranang Falls (also known as Jang Falls) is one of the most spectacular and thunderous waterfalls in India. Located near Jang town on the Sela-Tawang road, the waterfall is named in memory of Nura, a local Monpa tribal girl who assisted Indian rifleman Jaswant Singh Rawat in the 1962 war. The falls feature a small hydel power plant and scenic suspension bridges.",
-    "heroImage": "/images/places-images/nuranang waterfalls.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142192/ne_dhaniya_tours/nuranang_waterfalls.jpg",
     "topThingsToDo": [
       "Walk down the footpath to the rocky viewing bank right near the base of the roaring falls",
       "Feel the rejuvenating glacial mist spray and capture dramatic long-exposure photos",
@@ -1330,7 +1330,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Arunachal Pradesh",
     "shortDescription": "Hidden alpine valley of rolling fruit orchards, sheep farms & winter home of rare Black-Necked Cranes.",
     "description": "Located just 15 km from Dirang, Sangti Valley is an untouched piece of paradise tucked away from tourist crowds. Flanked by gentle mountain slopes, pine forests, and the sparkling Sangti River, the valley is known for its sheep-breeding farms, stone houses, apple and kiwi orchards, and serves as the winter migratory sanctuary for the rare and endangered Black-Necked Cranes arriving from Tibet.",
-    "heroImage": "/images/places-images/sangti valley.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142206/ne_dhaniya_tours/sangti_valley.jpg",
     "topThingsToDo": [
       "Spot majestic Black-Necked Cranes wintering in the paddy fields (November to February)",
       "Cross the rustic suspension footbridge over the clear turquoise Sangti River",
@@ -1367,7 +1367,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Sikkim",
     "shortDescription": "Clean, scenic capital city with panoramic Kanchenjunga viewpoints, MG Marg, and ancient monasteries.",
     "description": "Gangtok, the pristine capital of Sikkim, balances charming hill-station tranquility with modern vibrancy. Straddling mountain ridges, Gangtok features the pedestrianized, vehicle-free MG Marg, the historic Enchey and Rumtek monasteries, the scenic ropeway cable car, and serves as the gateway to North Sikkim and Tsomgo Lake.",
-    "heroImage": "/images/places-images/gangtok.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142153/ne_dhaniya_tours/gangtok.jpg",
     "topThingsToDo": [
       "Stroll along the clean, floral promenades of MG Marg",
       "Ride the Gangtok Ropeway for sweeping valley and city views",
@@ -1404,7 +1404,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Sikkim",
     "shortDescription": "Pristine alpine wonderland, gateway to Gurudongmar Lake, Yumthang Valley of Flowers & snow-covered peaks.",
     "description": "North Sikkim is the crown jewel of the Eastern Himalayas. Based around the traditional tribal mountain villages of Lachen and Lachung, North Sikkim takes you on an epic high-altitude adventure: from the sacred glacial expanse of Gurudongmar Lake (17,800 ft) to the blooming rhododendrons of Yumthang Valley and the eternal snowfields of Zero Point.",
-    "heroImage": "/images/places-images/northsikkim lachen and.webp",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142187/ne_dhaniya_tours/northsikkim_lachen_and.webp",
     "topThingsToDo": [
       "Journey to the high-altitude sacred Gurudongmar Lake (17,800 ft) from Lachen",
       "Experience warm wooden cottage hospitality in traditional Lachung village",
@@ -1441,7 +1441,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Sikkim",
     "shortDescription": "Alpine rhododendron sanctuary at 11,800 ft, sulfur hot springs & snowbound Zero Point at 15,300 ft.",
     "description": "Known popularly as the 'Valley of Flowers of the East', Yumthang Valley in North Sikkim is an ethereal alpine wonderland situated at 11,800 feet. Fringed by pine forests, hot sulfur springs, and the meandering Yumthang River, the valley blossoms into a riot of colors with over 24 species of wild rhododendrons in spring. Higher up lies Zero Point (Yumesamdong) at 15,300 feet, where the civilian road terminates amidst eternal snow.",
-    "heroImage": "/images/places-images/yumthang valley & zero Point.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142229/ne_dhaniya_tours/yumthang_valley___zero_Point.jpg",
     "topThingsToDo": [
       "Witness blooming rhododendron forests at Shingba Rhododendron Sanctuary in spring",
       "Dip into the natural therapeutic hot sulfur water spring",
@@ -1478,7 +1478,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Sikkim",
     "shortDescription": "One of the highest freshwater lakes in the world at 17,800 ft, sacred glacial waters & snow peaks.",
     "description": "Perched at an astonishing altitude of 17,800 feet (5,430 m) in the Tibetan plateau of North Sikkim, Gurudongmar Lake is one of the highest and most revered lakes on planet earth. Named after Guru Padmasambhava (Guru Rinpoche), who blessed the lake so that a portion of it never freezes even in the harshest sub-zero winter, Gurudongmar is encircled by glistening snow-capped Himalayan glaciers and sacred prayer flags.",
-    "heroImage": "/images/places-images/gurudongmar.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142155/ne_dhaniya_tours/gurudongmar.jpg",
     "topThingsToDo": [
       "Stand in reverent silence before the sacred, milky-blue waters of Gurudongmar Lake",
       "Pray at the small sarva-dharma shrine alongside colorful fluttering Buddhist prayer flags",
@@ -1515,7 +1515,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Sikkim",
     "shortDescription": "Sacred glacial lake at 12,400 ft, yak rides, Baba Harbhajan Mandir & historic Indo-China border pass at Nathula.",
     "description": "Tsomgo Lake (Changu Lake) is a sacred glacial lake perched at an altitude of 12,400 feet, surrounded by steep snow-clad peaks. Its surface mirrors shifting seasons, freezing completely in winter and surrounded by alpine flowers in spring. Further up lies the historic Nathula Pass on the Indo-China border (14,140 ft) along the Old Silk Route, and the sacred memorial shrine of Baba Harbhajan Singh.",
-    "heroImage": "/images/Sikkim Himalayan Explorer.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142234/ne_dhaniya_tours/Sikkim_Himalayan_Explorer.jpg",
     "topThingsToDo": [
       "Ride decorated mountain yaks along the shores of glacial Tsomgo Lake",
       "Stand at the international Indo-China border gate at Nathula Pass (subject to army permit)",
@@ -1552,7 +1552,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Sikkim",
     "shortDescription": "Closest dramatic vistas of Mount Kanchenjunga, India's first glass skywalk, Rabdentse ruins & Khecheopalri Lake.",
     "description": "Nestled at 6,800 feet in West Sikkim, Pelling offers arguably the closest and most magnificent sunrise vistas of Mount Kanchenjunga and its sister peaks. Highlights include India's first Glass Skywalk leading to the towering Chenrezig statue, the ruins of the 17th-century Rabdentse royal palace, sacred wish-fulfilling Khecheopalri Lake, Pemayangtse Monastery, and Kanchenjunga Falls.",
-    "heroImage": "/images/places-images/pelling to skywalk.webp",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142196/ne_dhaniya_tours/pelling_to_skywalk.webp",
     "topThingsToDo": [
       "Walk across the thrilling transparent Glass Skywalk overlooking deep valleys and Chenrezig statue",
       "Witness golden sunrise illumination hitting the snow peaks of Mount Kanchenjunga",
@@ -1589,7 +1589,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Sikkim",
     "shortDescription": "Majestic 130-foot golden Buddha statue set against snow peaks, manicured gardens & Ralang Monastery.",
     "description": "Perched at 7,000 feet in South Sikkim, Ravangla is renowned for the majestic Tathagata Tsal (Buddha Park). Constructed to commemorate the 2550th birth anniversary of Gautama Buddha, the park features a colossal 130-foot-high bronze statue of Lord Buddha, backdropped by the majestic snow-capped peaks of Mount Narsing and Mount Kabru. Surrounded by landscaped gardens and spiritual prayer halls, Ravangla radiates pure tranquility.",
-    "heroImage": "/images/places-images/Ravangla buddha park.webp",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142202/ne_dhaniya_tours/Ravangla_buddha_park.webp",
     "topThingsToDo": [
       "Circumambulate the magnificent 130-foot golden Buddha statue in peaceful contemplation",
       "Explore the museum and spiritual galleries inside the hollow base of the statue",
@@ -1626,7 +1626,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Sikkim",
     "shortDescription": "Spiritual complex featuring replicas of India's 4 Dhams, 87-ft Shiva statue & 118-ft Guru Padmasambhava at Samdruptse.",
     "description": "Namchi, the cultural capital of South Sikkim, is famous for the grand Siddhesvara Dhaam (Char Dham) complex perched on Solophok Hill. The complex replicates the four sacred Hindu pilgrimage sites (Badrinath, Jagannath, Dwarka, and Rameshwaram) alongside a towering 87-foot statue of Lord Shiva. Nearby atop Samdruptse Hill (Wish-Fulfilling Hill) sits the colossal 118-foot gilded statue of Guru Padmasambhava.",
-    "heroImage": "/images/places-images/namchi chardham.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142183/ne_dhaniya_tours/namchi_chardham.jpg",
     "topThingsToDo": [
       "Visit the 87-foot statue of Lord Shiva and replicas of the 12 Jyotirlingas at Solophok Chardham",
       "Marvel at the 118-foot gilded statue of Guru Rinpoche atop Samdruptse Hill",
@@ -1663,7 +1663,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Nagaland",
     "shortDescription": "Historic hilltop capital, pivotal 1944 Battle of Kohima WWII Cemetery, State Museum & local bazaars.",
     "description": "Kohima, the scenic capital of Nagaland, is steeped in WWII military history, rich indigenous tribal culture, and hilltop charm. Built across mountain ridges at an altitude of 4,738 feet, Kohima is renowned for the beautifully landscaped Commonwealth War Graves Cemetery, the Kohima Cathedral on Aradurah Hill, the Nagaland State Museum, and its proximity to Kisama Heritage Village.",
-    "heroImage": "/images/places-images/Kohima.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142172/ne_dhaniya_tours/Kohima.jpg",
     "topThingsToDo": [
       "Pay respects at the historic WWII Kohima War Cemetery and read the famous Kohima Epitaph",
       "Explore Naga tribal artifacts, weaponries, and musical instruments at the State Museum",
@@ -1700,7 +1700,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Nagaland",
     "shortDescription": "Pristine valley of rolling emerald bamboo hills at 2,452m, natural stream pools & rare endemic Dzukou lilies.",
     "description": "Straddling the border of Nagaland and Manipur at an elevation of 2,452 meters, Dzukou Valley is one of India's most extraordinary high-altitude trekking paradises. Characterized by gently rolling, undulating hills carpeted in dwarf bamboo, crystal-clear cold mountain streams, and natural caves, Dzukou transforms in summer with blooming rare endemic Dzukou lilies and wildflowers.",
-    "heroImage": "/images/places-images/dzukou valley.webp",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142151/ne_dhaniya_tours/dzukou_valley.webp",
     "topThingsToDo": [
       "Trek through mossy rainforest trails via Viswema or Jakhama route",
       "Stand in awe of the endless emerald rolling curves of the valley floor",
@@ -1737,7 +1737,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Nagaland",
     "shortDescription": "Permanent cultural amphitheater of the 10-day Hornbill Festival, featuring authentic tribal Morungs of all 16 Naga tribes.",
     "description": "Located 12 km south of Kohima, Naga Heritage Village Kisama is a purpose-built cultural sanctuary that serves as the official venue of the world-famous Hornbill Festival (held every year from December 1 to 10). Set against the lush backdrop of Mount Japfu, Kisama showcases the authentic indigenous architecture, carved totems, and traditional communal houses (Morungs) of all 16 recognized tribes of Nagaland.",
-    "heroImage": "/images/places-images/kisma Heritage Village.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142171/ne_dhaniya_tours/kisma_Heritage_Village.jpg",
     "topThingsToDo": [
       "Experience the colorful spectacle, tribal dances, and war chants at the annual Hornbill Festival",
       "Walk through the 16 distinct tribal Morungs to observe ancestral Naga carvings and lifestyles",
@@ -1774,7 +1774,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Nagaland",
     "shortDescription": "Asia's first certified green village, 700-year-old Angami tribal conservation heritage & terraced rice fields.",
     "description": "Perched 20 km west of Kohima, Khonoma is hailed as Asia's first green village. Inhabited by the resilient Angami Naga tribe who fiercely resisted British colonial rule, Khonoma made history in 1998 by banning all hunting and commercial logging to create the Khonoma Nature Conservation and Tragopan Sanctuary. The village is renowned for its stone forts, carven monoliths, terraced organic paddy fields, and eco-tourism.",
-    "heroImage": "/images/nagaland.avif",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142108/ne_dhaniya_tours/nagaland.avif",
     "topThingsToDo": [
       "Guided heritage walk through the ancient stone fortifications and village bastions",
       "Learn about the community conservation of the endangered Blyth's Tragopan bird",
@@ -1811,7 +1811,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Nagaland",
     "shortDescription": "Cultural center of the Ao Naga tribe, scenic ridge villages, ancient log drums & rich indigenous folklore.",
     "description": "Located in central Nagaland at an elevation of 4,347 feet, Mokokchung is the intellectual and cultural epicenter of the Ao Naga tribe. Built along scenic hill ridges, the district features picturesque ancestral villages like Ungma and Mopungchuket, traditional wooden log drums, rich folklore, and festive Moatsu and Tsungremmong tribal harvest celebrations.",
-    "heroImage": "/images/places-images/mokokchung.webp",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142180/ne_dhaniya_tours/mokokchung.webp",
     "topThingsToDo": [
       "Visit Ungma, the oldest and largest Ao Naga village, to see ancient heritage and tribal clan houses",
       "Explore the romantic village of Mopungchuket and its carved wooden log drums",
@@ -1848,7 +1848,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Nagaland",
     "shortDescription": "Land of the legendary tattooed Konyak warrior tribe, royal Angh palaces & Indo-Myanmar border village Longwa.",
     "description": "Situated in the far northeastern corner of Nagaland bordering Myanmar, Mon is the fascinating homeland of the Konyak Naga tribe—renowned in history as the fierce headhunters adorned with facial tattoos and brass skull necklaces. The district features the village of Longwa, where the international Indo-Myanmar border runs right through the middle of the hereditary chief's (Angh's) longhouse.",
-    "heroImage": "/images/places-images/Mon(Konyak Tribe Heritage).jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142181/ne_dhaniya_tours/Mon_Konyak_Tribe_Heritage_.jpg",
     "topThingsToDo": [
       "Visit Longwa village where the hereditary King's house sits straddling the India-Myanmar border",
       "Meet surviving elderly tattooed Konyak warriors and hear ancestral folklore",
@@ -1885,7 +1885,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Mizoram",
     "shortDescription": "Dramatic mountain capital built along vertiginous cliff ridges, Solomon's Temple, Durtlang Hills & Mizo culture.",
     "description": "Perched dramatically along steep mountain ridges at an altitude of 3,700 feet, Aizawl is the scenic and cultural capital of Mizoram. Overlooking lush Tlawng river valley, Aizawl is renowned for its tranquil mountain atmosphere, the grand marble Solomon's Temple, panoramic Durtlang Hills viewpoints, the Mizoram State Museum, and the vibrant Bara Bazar.",
-    "heroImage": "/images/places-images/aizawl.webp",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142139/ne_dhaniya_tours/aizawl.webp",
     "topThingsToDo": [
       "Enjoy breathtaking sunset views over the valley from Durtlang Hills",
       "Visit the magnificent white marble Solomon's Temple in Chawlhhmun",
@@ -1922,7 +1922,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Mizoram",
     "shortDescription": "Majestic 1,500m mountain peak overlooking Bangladesh plains, cliff edge trail & authentic Mizo heritage village.",
     "description": "Rising 1,500 meters above sea level, Reiek Tlang is one of Mizoram's most iconic mountain peaks. Surrounded by pristine subtropical rainforests home to exotic birds and gibbons, the peak features a dramatic cliff overhang offering panoramic views that stretch all the way to the plains of Bangladesh on clear days. At the foothills sits the Reiek Heritage Village, showcasing traditional Mizo chieftain houses.",
-    "heroImage": "/images/places-images/reiek.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142204/ne_dhaniya_tours/reiek.jpg",
     "topThingsToDo": [
       "Hike the scenic 45-minute nature trail through lush forest to Reiek summit",
       "Stand on the precipitous rocky cliff overlooking the vast expanse of hills and valleys",
@@ -1959,7 +1959,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Mizoram",
     "shortDescription": "Pristine hill resort at 1,619m, virgin rolling grasslands, misty cliffs & traditional Thalfavang Kut festival.",
     "description": "Located 50 km south of Aizawl at an elevation of 1,619 meters, Hmuifang is a serene mountain haven cloaked in virgin subtropical forests and rolling grassy knolls. Celebrated for its cool climate, dramatic vertical cliff drops, and untouched nature, Hmuifang hosts the colorful Thalfavang Kut tribal festival and provides a peaceful retreat from urban life.",
-    "heroImage": "/images/places-images/hmuifang.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142163/ne_dhaniya_tours/hmuifang.jpg",
     "topThingsToDo": [
       "Walk along the grassy ridge meadows and gaze down steep mist-covered cliffs",
       "Explore the surrounding virgin forests and spot rare mountain bird species",
@@ -1996,7 +1996,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Mizoram",
     "shortDescription": "Highest two-tiered waterfall in Mizoram plummeting 750 ft amidst dense impenetrable bamboo forests near Thenzawl.",
     "description": "Plunging 750 feet (229 m) down a sheer rock face, Vantawng Khawhthla is the highest and most magnificent waterfall in Mizoram. Tucked in the Serchhip district near the handloom town of Thenzawl, the waterfall cascades in two dramatic tiers amidst an impenetrable sea of thick green bamboo groves and tropical evergreen forests.",
-    "heroImage": "/images/places-images/vantawng.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142228/ne_dhaniya_tours/vantawng.jpg",
     "topThingsToDo": [
       "View the thunderous 750-foot waterfall cascade from the safe government viewing tower",
       "Photograph the dense untouched bamboo canopy enveloping the Vanva river gorge",
@@ -2033,7 +2033,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Mizoram",
     "shortDescription": "Natural freshwater lake fringed by evergreen forests, paddle boating & tranquil weekend picnics.",
     "description": "Tamdil (Lake of Mustards) is the largest natural body of water in Mizoram, situated in Saitual district amidst lush green hills and evergreen forests. A serene aquatic oasis, Tamdil is famous for its calm waters, paddle boating, rich birdlife, and tranquil lakeside tourist lodges, making it a favorite weekend getaway from Aizawl.",
-    "heroImage": "/images/places-images/tamdil.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142212/ne_dhaniya_tours/tamdil.jpg",
     "topThingsToDo": [
       "Paddle boating and row boating across the calm waters of the natural lake",
       "Leisurely walking along the tree-lined nature trails surrounding the water",
@@ -2070,7 +2070,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Mizoram",
     "shortDescription": "Rice bowl of Mizoram, fertile vineyard valleys, rolling blue hills & gateway to the heart-shaped Rih Dil lake.",
     "description": "Known as the 'Rice Bowl of Mizoram', Champhai is a picturesque border town located along the eastern edge of the state overlooking the misty blue hills of Myanmar. Dominated by expansive terraced rice fields, fruit orchards, and commercial vineyards producing local wine, Champhai provides access to the legendary heart-shaped lake Rih Dil.",
-    "heroImage": "/images/places-images/champhai.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142144/ne_dhaniya_tours/champhai.jpg",
     "topThingsToDo": [
       "Gaze out over the vast emerald expanse of the Champhai valley rice bowl",
       "Visit the mythical heart-shaped Rih Dil lake located just across the border",
@@ -2107,7 +2107,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Tripura",
     "shortDescription": "Imperial royal capital featuring the neoclassical Ujjayanta Palace, Mughal gardens & heritage museums.",
     "description": "Agartala, the charming capital of Tripura, is rich in royal Manikya dynasty heritage, royal palaces, and tranquil lakes. The city's crown jewel is the gleaming white Ujjayanta Palace, set amidst formal Mughal-style gardens and fountains. Agartala also features the 14-Gods Temple (Chaturdasha Devata), heritage craft markets, and convenient road connectivity to Neermahal and Unakoti.",
-    "heroImage": "/images/tripura.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142242/ne_dhaniya_tours/tripura.jpg",
     "topThingsToDo": [
       "Tour the grand halls and heritage museum of Ujjayanta Palace",
       "Witness the border retreat ceremony at Akhaura Integrated Check Post (India-Bangladesh)",
@@ -2144,7 +2144,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Tripura",
     "shortDescription": "Gleaming white neoclassical royal palace built in 1901 by Maharaja Radha Kishore Manikya, now state museum.",
     "description": "Standing majestically in the heart of Agartala, Ujjayanta Palace is a stunning neoclassical royal mansion constructed between 1899 and 1901 by Maharaja Radha Kishore Manikya. Set within a 1-sq-km compound of manicured Mughal-inspired gardens, grand fountains, and two large lakes, the palace features magnificent tiled floors, carved wooden ceilings, and houses the premier Tripura State Museum.",
-    "heroImage": "/images/places-images/ujjayanta Places.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142224/ne_dhaniya_tours/ujjayanta_Places.jpg",
     "topThingsToDo": [
       "Walk through the grand royal halls showcasing the rich cultural history of Northeast India",
       "Admire the majestic neoclassical architectural domes and tiled courtyards",
@@ -2181,7 +2181,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Tripura",
     "shortDescription": "Only water palace in Eastern India, floating like a fairytale fortress in the center of Rudrasagar Lake.",
     "description": "Known as the 'Lake Palace of Eastern India', Neermahal (Water Palace) was constructed in 1930 by Maharaja Bir Bikram Kishore Manikya as his summer residence. Situated right in the middle of the picturesque Rudrasagar Lake near Melaghar, the palace is a breathtaking synthesis of Hindu architectural domes and Islamic arches, accessible by scenic motorboat rides across the lake.",
-    "heroImage": "/images/tripura.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142242/ne_dhaniya_tours/tripura.jpg",
     "topThingsToDo": [
       "Motorboat ride across the expansive waters of Rudrasagar Lake to reach the palace",
       "Explore the 24-room royal palace, open-air courtyards, and royal boat ghats",
@@ -2218,7 +2218,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Tripura",
     "shortDescription": "Ancient 7th-9th century bas-relief rock carvings of Shiva and 99,99,999 deities carved directly into the jungle mountain.",
     "description": "Hidden deep in the forested hills of northern Tripura near Kailashahar, Unakoti (meaning 'one less than a crore') is an astonishing ancient Shaivite pilgrimage site dating from the 7th to 9th centuries. Carved directly into massive vertical rock faces and river gorges, Unakoti features colossal bas-relief stone sculptures of Lord Shiva (Unakotiswara Kal Bhairava, measuring 30 feet tall), Lord Ganesha, and celestial deities.",
-    "heroImage": "/images/places-images/unakoti rock.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142227/ne_dhaniya_tours/unakoti_rock.jpg",
     "topThingsToDo": [
       "Marvel at the colossal 30-foot head of Lord Shiva carved into the sheer rocky mountainside",
       "Walk along the ancient stone steps crossing natural streams and waterfalls",
@@ -2255,7 +2255,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Tripura",
     "shortDescription": "Highest mountain range in Tripura at 3,000 ft, sweet orange orchards, Betlingchhip peak & cool climate.",
     "description": "Rising 3,000 feet above sea level along the border of Tripura and Mizoram, Jampui Hills is celebrated as the 'Seat of Spring' and is Tripura's premier hill station. Characterized by pleasant eternal spring weather, lush green valleys, and sweet orange orchards, Jampui is home to the Mizo and Reang tribal communities. The highest point, Betlingchhip (3,200 ft), provides panoramic vistas stretching over the Chittagong Hill Tracts.",
-    "heroImage": "/images/places-images/jampui Hills.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142164/ne_dhaniya_tours/jampui_Hills.jpg",
     "topThingsToDo": [
       "Trek up to Betlingchhip peak for sweeping views across Tripura, Mizoram, and Bangladesh",
       "Walk through fragrant, fruit-laden orange orchards during autumn harvest season",
@@ -2292,7 +2292,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Tripura",
     "shortDescription": "One of the 51 sacred Shaktipeethas (Matabari) in Udaipur, 500-year-old tortoise-shaped shrine by Kalyansagar Lake.",
     "description": "Located in the ancient royal capital of Udaipur (Tripura), the holy Tripura Sundari Temple (popularly known as Matabari) is one of the most sacred of the 51 Shakti Peethas. Built in 1501 AD by Maharaja Dhanya Manikya, the temple is perched on a small hillock resembling the back of a tortoise (Kurmapitha). Dedicated to Goddess Kali, the temple is flanked by the sacred Kalyansagar Lake, home to giant endangered Boston black turtles.",
-    "heroImage": "/images/places-images/sundari temple.jpeg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142210/ne_dhaniya_tours/sundari_temple.jpg",
     "topThingsToDo": [
       "Darshan and puja at the sanctum of the 500-year-old Tripura Sundari Shaktipeeth",
       "Feed puffed rice to the friendly giant sacred freshwater turtles in Kalyansagar Lake",
@@ -2329,7 +2329,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Bhutan",
     "shortDescription": "Peaceful capital of Bhutan, Buddha Dordenma golden statue, Tashichho Dzong & traditional crafts.",
     "description": "Thimphu, the tranquil capital of the Kingdom of Bhutan, uniquely blends centuries-old Buddhist traditions with modern governance. As the only capital city in the world without a single traffic light, Thimphu features the colossal 169-foot Buddha Dordenma bronze statue, the riverside fortress Tashichho Dzong, the National Memorial Chorten, and the Motithang Takin Preserve.",
-    "heroImage": "/images/places-images/thimpu.webp",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142215/ne_dhaniya_tours/thimpu.webp",
     "topThingsToDo": [
       "Visit Buddha Dordenma (Buddha Point) for sweeping panoramas over Thimphu valley",
       "Witness evening lighting and monastic splendour at Tashichho Dzong",
@@ -2366,7 +2366,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Bhutan",
     "shortDescription": "Iconic cliffside pilgrimage hike to Tiger's Nest Monastery (Paro Taktsang), Rinpung Dzong & National Museum.",
     "description": "Paro is a breathtaking mountain valley home to Bhutan's sole international airport and the kingdom's most sacred pilgrimage site: Paro Taktsang (The Tiger's Nest). Clinging miraculously to a sheer granite cliff 900 meters above the valley floor, Tiger's Nest is where Guru Padmasambhava meditated in the 8th century. Paro also boasts the majestic Rinpung Dzong, the ancient Ta Dzong National Museum, and traditional wooden cantilever bridges.",
-    "heroImage": "/images/places-images/paro to tiger's Nest.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142194/ne_dhaniya_tours/paro_to_tiger_s_Nest.jpg",
     "topThingsToDo": [
       "Embark on the iconic 4 to 5 hour pilgrimage hike to cliffside Tiger's Nest Monastery",
       "Walk across the traditional cantilever bridge to historic Rinpung Dzong",
@@ -2403,7 +2403,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Bhutan",
     "shortDescription": "Palace of Great Happiness fortress at the confluence of Pho Chhu & Mo Chhu, longest suspension bridge & fertility temple.",
     "description": "Blessed with a warm subtropical climate and lush rice valleys, Punakha served as the ancient winter capital of Bhutan for over 300 years. Its centerpiece is the breathtaking Punakha Dzong (Pungtang Dechen Photrang Dzong), situated romantically at the scenic confluence of the Pho Chhu (father) and Mo Chhu (mother) rivers. Nearby lies the famous Chimi Lhakhang (Divine Madman fertility temple) and Bhutan's longest pedestrian suspension bridge.",
-    "heroImage": "/images/places-images/Punakha-Dzong-Monastery.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142201/ne_dhaniya_tours/Punakha-Dzong-Monastery.jpg",
     "topThingsToDo": [
       "Cross the wooden cantilever bridge into the grand courtyards of Punakha Dzong",
       "Walk across Bhutan's longest suspension bridge draped in fluttering prayer flags",
@@ -2440,7 +2440,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Bhutan",
     "shortDescription": "Scenic mountain pass at 3,100m, 108 Druk Wangyal memorial chortens & 360-degree Himalayan snow peak panoramas.",
     "description": "Dochula Pass, located at an altitude of 3,100 meters on the highway between Thimphu and Punakha, is one of Bhutan's most awe-inspiring vantage points. The pass is crowned by 108 memorial stupas known as the Druk Wangyal Chortens, built in honour of brave Bhutanese soldiers. On clear autumn and winter days, Dochula provides a staggering 360-degree panoramic view of the snow-capped Eastern Himalayan range, including Gangkhar Puensum (the world's highest unclimbed peak).",
-    "heroImage": "/images/places-images/dochula pass.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142148/ne_dhaniya_tours/dochula_pass.jpg",
     "topThingsToDo": [
       "Walk among the 108 Druk Wangyal Chortens set against snow-capped Himalayan summits",
       "Sip hot butter tea at the hillside Dochula cafeteria while gazing at snow peaks",
@@ -2477,7 +2477,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Bhutan",
     "shortDescription": "Broad glacial valley, Gangtey Monastery & sacred winter sanctuary of Black-Necked Cranes.",
     "description": "Phobjikha Valley (also called Gangtey) is a stunning, wide U-shaped glacial valley perched at 3,000 meters on the western slopes of the Black Mountains. Famous for its pristine natural serenity without overhead electric lines (buried underground to protect wildlife), Phobjikha is the sacred winter nesting ground of the rare Black-Necked Cranes migrating from Tibet, and is crowned by the 17th-century Gangtey Monastery.",
-    "heroImage": "/images/places-images/phobjika valley.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142197/ne_dhaniya_tours/phobjika_valley.jpg",
     "topThingsToDo": [
       "Walk the gentle Gangtey Nature Trail through pine forests and valley meadows",
       "Observe endangered Black-Necked Cranes through spotting scopes at the Crane Centre",
@@ -2514,7 +2514,7 @@ export const initialTouristPlaces: TouristPlace[] = [
     "destinationName": "Bhutan",
     "shortDescription": "Secluded ancestral valley, Chele La Pass (3,988m), Lhakhang Karpo (White Temple) & ancient traditions.",
     "description": "Hidden behind mountain ridges and only opened to foreign tourism in 2002, Haa Valley is one of Bhutan's most secluded and pristine valleys. Reached via Chele La Pass (3,988m—Bhutan's highest motorable pass), Haa is celebrated for the 7th-century Lhakhang Karpo (White Temple) and Lhakhang Nagpo (Black Temple), traditional buckwheat farming, and timeless alpine serenity.",
-    "heroImage": "/images/places-images/Haa Valley.jpg",
+    "heroImage": "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142159/ne_dhaniya_tours/Haa_Valley.jpg",
     "topThingsToDo": [
       "Drive across Chele La Pass (3,988m) and see panoramic views of Mount Jomolhari",
       "Visit the 7th-century twin temples Lhakhang Karpo and Lhakhang Nagpo",
@@ -2552,7 +2552,7 @@ export const initialVehicles: Vehicle[] = [
     slug: "force-urbania",
     seatingCapacity: "10-17 Passengers",
     description: "The next-generation luxury van designed for ultimate executive and group comfort. Features individual reclining seats, individual AC vents, panoramic sealed windows, USB charging at every row, and class-leading suspension for smooth long-distance mountain journeys.",
-    image: "/images/Urbaniya.avif",
+    image: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142247/ne_dhaniya_tours/Urbaniya.avif",
     idealFor: "Premium group tours, corporate delegations, luxury family travel across Meghalaya, Assam, and Bhutan.",
     comfortLevel: "Ultra Premium / Luxury",
     luggageCapacity: "12-16 Large Bags",
@@ -2565,7 +2565,7 @@ export const initialVehicles: Vehicle[] = [
     slug: "innova-crysta",
     seatingCapacity: "6-7 Passengers",
     description: "The gold standard for family and hill travel in Northeast India. Renowned for its superior ride comfort, robust hill-climbing power, generous legroom, premium upholstery, and silent cabin across high-altitude roads like Tawang and North Sikkim.",
-    image: "/images/tyotainnova.png",
+    image: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142245/ne_dhaniya_tours/tyotainnova.png",
     idealFor: "Families, couples, small private groups traveling across winding mountain highways.",
     comfortLevel: "Premium",
     luggageCapacity: "4-5 Large Bags",
@@ -2578,7 +2578,7 @@ export const initialVehicles: Vehicle[] = [
     slug: "tempo-traveler-13",
     seatingCapacity: "13 Passengers + Driver",
     description: "The most popular vehicle choice for mid-sized travel groups, extended families, and student excursions. Equipped with push-back seats, powerful dual AC, music system, and high ground clearance suitable for all terrain.",
-    image: "/images/travelr.webp",
+    image: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142241/ne_dhaniya_tours/travelr.webp",
     idealFor: "Medium groups, family reunions, multi-day interstate Northeast tours.",
     comfortLevel: "Comfortable Push-Back",
     luggageCapacity: "8-10 Bags (Dedicated rear/roof carrier)",
@@ -2591,7 +2591,7 @@ export const initialVehicles: Vehicle[] = [
     slug: "tempo-traveler-17",
     seatingCapacity: "17 Passengers + Driver",
     description: "Spacious passenger van ideal for larger tour groups wanting to travel together in a single comfortable vehicle. Full push-back seating, ample aisle space, and heavy-duty luggage carrier.",
-    image: "/images/travelers17.webp",
+    image: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142239/ne_dhaniya_tours/travelers17.webp",
     idealFor: "Corporate groups, pilgrim tours, larger family parties, student groups.",
     comfortLevel: "Standard Push-Back",
     luggageCapacity: "14-16 Bags",
@@ -2604,7 +2604,7 @@ export const initialVehicles: Vehicle[] = [
     slug: "tempo-traveler-26",
     seatingCapacity: "26 Passengers + Driver",
     description: "High-capacity touring van engineered for economical, unified group transportation without the operational constraints of a full-size bus on mountain routes.",
-    image: "/images/travelers26.jpg",
+    image: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142240/ne_dhaniya_tours/travelers26.jpg",
     idealFor: "College tours, institutional travel, event transportation, large tourist groups.",
     comfortLevel: "Standard",
     luggageCapacity: "20+ Bags",
@@ -2617,7 +2617,7 @@ export const initialVehicles: Vehicle[] = [
     slug: "premium-sedan",
     seatingCapacity: "4 Passengers + Driver",
     description: "Economical, smooth, and fuel-efficient option for couples, solo travelers, and small families. Perfect for Guwahati airport transfers, Shillong day trips, and Kaziranga highway drives.",
-    image: "/images/dzire.avif",
+    image: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142038/ne_dhaniya_tours/dzire.avif",
     idealFor: "Couples, honeymooners, solo explorers, budget travelers.",
     comfortLevel: "Standard Sedan",
     luggageCapacity: "2-3 Suitcases",
@@ -2630,7 +2630,7 @@ export const initialVehicles: Vehicle[] = [
     slug: "deluxe-bus-24",
     seatingCapacity: "24 Passengers",
     description: "Air-conditioned mini-coach designed for organized group pilgrimages, school/college excursions, and destination weddings across Northeast India.",
-    image: "/images/delux-bus.jpg",
+    image: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142037/ne_dhaniya_tours/delux-bus.jpg",
     idealFor: "Wedding parties, institutional groups, conference tours.",
     comfortLevel: "Deluxe Coach",
     luggageCapacity: "Ample underbelly & interior storage",
@@ -2643,7 +2643,7 @@ export const initialVehicles: Vehicle[] = [
     slug: "luxury-bus-22",
     seatingCapacity: "22 Passengers (2x1 Recliner)",
     description: "Ultra-comfortable executive coach featuring plush wide 2x1 reclining seats, ambient cabin lighting, and superior shock absorption for effortless highway cruising.",
-    image: "/images/luxury-bus.webp",
+    image: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142077/ne_dhaniya_tours/luxury-bus.webp",
     idealFor: "VIP delegations, luxury group travel, long-distance interstate circuits.",
     comfortLevel: "Luxury Recliner",
     luggageCapacity: "Large underbelly baggage holds",
@@ -2664,7 +2664,7 @@ export const initialTourPackages: TourPackage[] = [
     travelMode: "both",
     shortDescription: "Discover Shillong, Cherrapunji, Dawki's crystal river, and Mawlynnong with customized private or sharing options.",
     description: "Embark on an enchanting 5-day journey through the Abode of Clouds. Marvel at the cascading Nohkalikai Falls, trek through ancient limestone caves, cruise on the crystal-clear waters of Dawki's Umngot River, and visit Asia's cleanest village Mawlynnong. Available as a private personalized tour or budget-friendly sharing group.",
-    heroImage: "/images/Meghalaya Scenic Escape.webp",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142085/ne_dhaniya_tours/Meghalaya_Scenic_Escape.webp",
     highlights: [
       "Scenic drive past Umiam Lake to Shillong",
       "Nohkalikai Falls, Mawsmai Cave & Seven Sisters Falls in Cherrapunji",
@@ -2750,7 +2750,7 @@ export const initialTourPackages: TourPackage[] = [
     travelMode: "both",
     shortDescription: "An epic Himalayan expedition from Guwahati through Bomdila, Dirang, Sela Pass (13,700 ft) to Tawang and Bumla Pass.",
     description: "Ascend into the Land of the Dawn-Lit Mountains on a legendary 7-day road trip. Cross the snow-blanketed Sela Pass, pay homage at the 400-year-old Tawang Monastery, witness the thunderous Nuranang Falls, and venture to the Indo-China frontier at Bumla Pass and Madhuri Lake.",
-    heroImage: "/images/Tawang Mountain Odyssey.avif",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142237/ne_dhaniya_tours/Tawang_Mountain_Odyssey.avif",
     highlights: [
       "Scenic crossing of Sela Pass (13,700 ft) and Sela Lake",
       "Historical 400-year-old Tawang Monastery visit",
@@ -2845,7 +2845,7 @@ export const initialTourPackages: TourPackage[] = [
     travelMode: "both",
     shortDescription: "Experience the thrill of sighting one-horned rhinos, wild elephants, and tigers across Kaziranga National Park.",
     description: "An unforgettable wildlife immersion into UNESCO World Heritage Kaziranga National Park. Enjoy morning elephant safaris, open-top 4x4 jeep safaris in different ranges, visits to the Kaziranga Orchid Biodiversity Park, and serene walks in lush Assam tea gardens.",
-    heroImage: "/images/Kaziranga Wildlife Safari & Tea Trail.webp",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142044/ne_dhaniya_tours/Kaziranga_Wildlife_Safari___Tea_Trail.webp",
     highlights: [
       "Thrilling morning Elephant Safari in Central/Western Range",
       "Jeep Safaris across Kohora & Bagori ranges",
@@ -2923,7 +2923,7 @@ export const initialTourPackages: TourPackage[] = [
     travelMode: "both",
     shortDescription: "Explore Gangtok, high-altitude Tsomgo Lake, Lachung, and the colorful Yumthang Valley of Flowers.",
     description: "Discover the jewel of the Eastern Himalayas. Experience the vibrant culture and mountain vistas of Gangtok, sacred glacial lakes, and journey deep into North Sikkim to Lachung and the Valley of Flowers at Yumthang, with optional excursion to Zero Point.",
-    heroImage: "/images/Sikkim Himalayan Explorer.jpg",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142234/ne_dhaniya_tours/Sikkim_Himalayan_Explorer.jpg",
     highlights: [
       "Gangtok city sights & stroll along pedestrian MG Marg",
       "Excursion to holy Tsomgo Lake (12,400 ft) & Baba Mandir",
@@ -3010,7 +3010,7 @@ export const initialTourPackages: TourPackage[] = [
     travelMode: "both",
     shortDescription: "Experience Thimphu, Punakha Dzong, and the legendary hike to Tiger's Nest Monastery (Paro Taktsang).",
     description: "A soul-stirring journey through the peaceful Himalayan kingdom of Bhutan. Marvel at centuries-old fortress monasteries (Dzongs), traverse Dochula Pass with its 108 stupas and mountain vistas, stroll through scenic Punakha valley, and complete the iconic pilgrimage hike to cliffside Tiger's Nest.",
-    heroImage: "/images/Bhutan Cultural & Himalayan Experience.jpg",
+    heroImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142034/ne_dhaniya_tours/Bhutan_Cultural___Himalayan_Experience.jpg",
     highlights: [
       "Iconic hike to Paro Taktsang (Tiger's Nest Monastery)",
       "Majestic Punakha Dzong located at the confluence of Pho Chhu and Mo Chhu rivers",
@@ -3157,7 +3157,7 @@ When traveling across Meghalaya's winding hilly terrain, having reliable transpo
 
 NE Dhanya Tour and Travels provides private vehicle rentals (Innova Crysta, Sedans, Tempo Travelers), personalized tour itineraries, and hotel reservations across Shillong, Cherrapunji, and Dawki.
     `,
-    featuredImage: "https://images.unsplash.com/photo-1608889825103-eb5ed706fc64?auto=format&fit=crop&w=1000&q=80",
+    featuredImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142249/ne_dhaniya_tours/external/bmdhqk1fyhbqcbchwy5t.jpg",
     category: "Meghalaya",
     tags: ["Meghalaya", "Shillong", "Cherrapunji", "Dawki", "Travel Tips"],
     author: "NE Dhanya Travel Desk",
@@ -3230,7 +3230,7 @@ The Trans-Arunachal highway sections are well-built by the Border Roads Organisa
 
 NE Dhanya Tour and Travels manages the entire Guwahati to Tawang circuit with verified mountain drivers, ILP permits, Bumla Pass coordination, and handpicked hotels in Bomdila, Dirang, and Tawang.
     `,
-    featuredImage: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1000&q=80",
+    featuredImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142250/ne_dhaniya_tours/external/i01woofzmwjvbumjiphk.jpg",
     category: "Arunachal Pradesh",
     tags: ["Arunachal Pradesh", "Tawang", "Sela Pass", "Bumla Pass", "Road Trip"],
     author: "NE Dhanya Travel Desk",
@@ -3293,7 +3293,7 @@ Kaziranga is officially open to visitors from **November 1 to April 30**. During
 
 NE Dhanya Tour and Travels provides direct pickup from Guwahati Airport / Railway Station with comfortable cabs, hotel bookings, and guaranteed safari permit coordination.
     `,
-    featuredImage: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=80",
+    featuredImage: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142250/ne_dhaniya_tours/external/sfmvcuhvvxgevridwmqv.jpg",
     category: "Assam",
     tags: ["Assam", "Kaziranga", "Wildlife Safari", "One-Horned Rhino"],
     author: "NE Dhanya Travel Desk",
@@ -3320,7 +3320,7 @@ export const initialReviews: Review[] = [
     id: "rev-1",
     name: "Dr. Anirban & Sreemoyee Roy",
     location: "Kolkata, West Bengal",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+    avatar: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142251/ne_dhaniya_tours/external/k3uw3akee0xjx6oj97yc.jpg",
     rating: 5,
     tourName: "Meghalaya Scenic Escape (6D/5N)",
     travelMode: "Personal Private Tour",
@@ -3333,7 +3333,7 @@ export const initialReviews: Review[] = [
     id: "rev-2",
     name: "Vikram & Neha Malhotra",
     location: "Gurugram / Delhi NCR",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+    avatar: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142252/ne_dhaniya_tours/external/zcbpqnayqlmqts9xcmiy.jpg",
     rating: 5,
     tourName: "Guwahati to Tawang Himalayan Circuit (8D/7N)",
     travelMode: "Personal Private Tour",
@@ -3346,7 +3346,7 @@ export const initialReviews: Review[] = [
     id: "rev-3",
     name: "Pooja Hegde & Travel Group",
     location: "Bengaluru, Karnataka",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
+    avatar: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142253/ne_dhaniya_tours/external/medk5rpc4vczpwhudg3y.jpg",
     rating: 5,
     tourName: "Assam Wildlife & Meghalaya Adventure (7D/6N)",
     travelMode: "Sharing Tour",
@@ -3359,7 +3359,7 @@ export const initialReviews: Review[] = [
     id: "rev-4",
     name: "Col. Rajesh & Sunita Sharma",
     location: "Chandigarh",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+    avatar: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142254/ne_dhaniya_tours/external/hxh2zplljlhf0gxepw55.jpg",
     rating: 5,
     tourName: "Bhutan Cultural Expedition via Assam (7D/6N)",
     travelMode: "Personal Private Tour",
@@ -3372,7 +3372,7 @@ export const initialReviews: Review[] = [
     id: "rev-5",
     name: "Debashis Mukherjee",
     location: "Mumbai, Maharashtra",
-    avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=200&q=80",
+    avatar: "https://res.cloudinary.com/bpi3s64e/image/upload/v1790142254/ne_dhaniya_tours/external/hntqxgcrq4g5sfr8bxnl.jpg",
     rating: 5,
     tourName: "Guwahati Airport to Shillong & Cherrapunji Outstation",
     travelMode: "Outstation Car Rental",
