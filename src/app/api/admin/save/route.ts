@@ -4,14 +4,26 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { revalidatePath } from 'next/cache';
 
-async function ensureServerAuth() {
-  if (!auth) return;
-  if (!auth.currentUser) {
-    try {
-      await signInWithEmailAndPassword(auth, "admin@nedhanyatours.com", "Admin@123456");
-    } catch (e: any) {
-      console.warn("Server auth sign in warning:", e?.message);
+function cleanUndefined(obj: any): any {
+  if (obj === undefined) return null;
+  if (obj === null) return null;
+  if (Array.isArray(obj)) return obj.map(cleanUndefined);
+  if (typeof obj === 'object') {
+    const cleaned: Record<string, any> = {};
+    for (const [key, value] of Object.entries(obj)) {
+      if (value !== undefined) {
+        cleaned[key] = cleanUndefined(value);
+      }
     }
+    return cleaned;
+  }
+  return obj;
+}
+
+async function ensureServerAuth() {
+  if (!auth) throw new Error("Firebase Auth is not initialized on server");
+  if (!auth.currentUser) {
+    await signInWithEmailAndPassword(auth, "admin@nedhanyatours.com", "Admin@123456");
   }
 }
 
@@ -28,7 +40,8 @@ export async function POST(req: Request) {
 
     await ensureServerAuth();
 
-    await setDoc(doc(db, collectionName, docId), data, { merge: true });
+    const sanitizedData = cleanUndefined(data);
+    await setDoc(doc(db, collectionName, docId), sanitizedData, { merge: true });
 
     // Invalidate Next.js caches across all public pages
     revalidatePath('/', 'layout');

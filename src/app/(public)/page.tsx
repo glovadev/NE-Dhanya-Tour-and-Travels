@@ -218,7 +218,7 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {packages.slice(0, 6).map((pkg) => (
+            {packages.slice(0, 9).map((pkg) => (
               <PackageCard 
                 key={pkg.id} 
                 pkg={pkg} 

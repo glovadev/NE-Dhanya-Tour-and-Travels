@@ -149,6 +149,14 @@ function saveStoredItems<T>(key: string, items: T[], eventName: string) {
   }
 }
 
+function sortByDateDesc<T>(items: T[]): T[] {
+  return [...items].sort((a: any, b: any) => {
+    const dateA = new Date(a?.updatedAt || a?.publishedAt || a?.createdAt || 0).getTime();
+    const dateB = new Date(b?.updatedAt || b?.publishedAt || b?.createdAt || 0).getTime();
+    return dateB - dateA;
+  });
+}
+
 // Helper: Execute document save via authenticated server API route or fallback to direct Firestore
 async function serverSaveDoc(collectionName: string, docId: string, data: any): Promise<boolean> {
   if (typeof window !== 'undefined') {
@@ -161,9 +169,16 @@ async function serverSaveDoc(collectionName: string, docId: string, data: any): 
       if (res.ok) {
         const json = await res.json();
         if (json.success === true) return true;
+        console.error(`/api/admin/save failed for ${collectionName}/${docId}:`, json.error);
+        return false;
+      } else {
+        const text = await res.text();
+        console.error(`/api/admin/save HTTP error ${res.status} for ${collectionName}/${docId}:`, text);
+        return false;
       }
     } catch (e) {
-      console.warn(`Failed /api/admin/save for ${collectionName}/${docId}`, e);
+      console.error(`Network error calling /api/admin/save for ${collectionName}/${docId}:`, e);
+      return false;
     }
   }
 
@@ -177,7 +192,7 @@ async function serverSaveDoc(collectionName: string, docId: string, data: any): 
       return false;
     }
   }
-  return true;
+  return false;
 }
 
 // Helper: Execute document delete via authenticated server API route or fallback to direct Firestore
@@ -192,9 +207,16 @@ async function serverDeleteDoc(collectionName: string, docId: string): Promise<b
       if (res.ok) {
         const json = await res.json();
         if (json.success === true) return true;
+        console.error(`/api/admin/delete failed for ${collectionName}/${docId}:`, json.error);
+        return false;
+      } else {
+        const text = await res.text();
+        console.error(`/api/admin/delete HTTP error ${res.status} for ${collectionName}/${docId}:`, text);
+        return false;
       }
     } catch (e) {
-      console.warn(`Failed /api/admin/delete for ${collectionName}/${docId}`, e);
+      console.error(`Network error calling /api/admin/delete for ${collectionName}/${docId}:`, e);
+      return false;
     }
   }
 
@@ -208,7 +230,7 @@ async function serverDeleteDoc(collectionName: string, docId: string): Promise<b
       return false;
     }
   }
-  return true;
+  return false;
 }
 
 // DESTINATIONS
@@ -218,17 +240,18 @@ export async function getAllDestinations(): Promise<Destination[]> {
       const snap = await getDocs(collection(db, 'destinations'));
       if (!snap.empty) {
         const firestoreData = snap.docs.map(d => ({ id: d.id, ...d.data() } as Destination));
-        setSilentStorage(DESTINATIONS_STORAGE_KEY, firestoreData);
-        localDestinations = firestoreData;
-        return firestoreData;
+        const sorted = sortByDateDesc(firestoreData);
+        setSilentStorage(DESTINATIONS_STORAGE_KEY, sorted);
+        localDestinations = sorted;
+        return sorted;
       }
     } catch (e) {
       console.warn("Failed fetching destinations from Firestore, using local fallback", e);
     }
   }
   const local = getStoredItems<Destination>(DESTINATIONS_STORAGE_KEY, initialDestinations);
-  localDestinations = local;
-  return local;
+  localDestinations = sortByDateDesc(local);
+  return localDestinations;
 }
 
 export async function getDestinationBySlug(slug: string): Promise<Destination | null> {
@@ -272,17 +295,18 @@ export async function getAllTouristPlaces(): Promise<TouristPlace[]> {
       const snap = await getDocs(collection(db, 'touristPlaces'));
       if (!snap.empty) {
         const firestoreData = snap.docs.map(d => ({ id: d.id, ...d.data() } as TouristPlace));
-        setSilentStorage(PLACES_STORAGE_KEY, firestoreData);
-        localPlaces = firestoreData;
-        return firestoreData;
+        const sorted = sortByDateDesc(firestoreData);
+        setSilentStorage(PLACES_STORAGE_KEY, sorted);
+        localPlaces = sorted;
+        return sorted;
       }
     } catch (e) {
       console.warn("Failed fetching tourist places from Firestore, using local fallback", e);
     }
   }
   const local = getStoredItems<TouristPlace>(PLACES_STORAGE_KEY, initialTouristPlaces);
-  localPlaces = local;
-  return local;
+  localPlaces = sortByDateDesc(local);
+  return localPlaces;
 }
 
 export async function getTouristPlacesByDestination(destSlug: string): Promise<TouristPlace[]> {
@@ -305,7 +329,7 @@ export async function saveTouristPlace(place: TouristPlace): Promise<boolean> {
     if (idx >= 0) {
       current[idx] = place;
     } else {
-      current.push(place);
+      current.unshift(place);
     }
     saveStoredItems(PLACES_STORAGE_KEY, current, 'ne_dhanya_places_updated');
     localPlaces = current;
@@ -331,17 +355,18 @@ export async function getAllPackages(): Promise<TourPackage[]> {
       const snap = await getDocs(collection(db, 'tourPackages'));
       if (!snap.empty) {
         const firestoreData = snap.docs.map(d => ({ id: d.id, ...d.data() } as TourPackage));
-        setSilentStorage(PACKAGES_STORAGE_KEY, firestoreData);
-        localPackages = firestoreData;
-        return firestoreData;
+        const sorted = sortByDateDesc(firestoreData);
+        setSilentStorage(PACKAGES_STORAGE_KEY, sorted);
+        localPackages = sorted;
+        return sorted;
       }
     } catch (e) {
       console.warn("Failed fetching packages from Firestore, using local fallback", e);
     }
   }
   const local = getStoredItems<TourPackage>(PACKAGES_STORAGE_KEY, initialTourPackages);
-  localPackages = local;
-  return local;
+  localPackages = sortByDateDesc(local);
+  return localPackages;
 }
 
 export async function getPackageBySlug(slug: string): Promise<TourPackage | null> {
@@ -390,17 +415,18 @@ export async function getAllVehicles(): Promise<Vehicle[]> {
       const snap = await getDocs(collection(db, 'vehicles'));
       if (!snap.empty) {
         const firestoreData = snap.docs.map(d => ({ id: d.id, ...d.data() } as Vehicle));
-        setSilentStorage(VEHICLES_STORAGE_KEY, firestoreData);
-        localVehicles = firestoreData;
-        return firestoreData;
+        const sorted = sortByDateDesc(firestoreData);
+        setSilentStorage(VEHICLES_STORAGE_KEY, sorted);
+        localVehicles = sorted;
+        return sorted;
       }
     } catch (e) {
       console.warn("Failed fetching vehicles from Firestore, using local fallback", e);
     }
   }
   const local = getStoredItems<Vehicle>(VEHICLES_STORAGE_KEY, initialVehicles);
-  localVehicles = local;
-  return local;
+  localVehicles = sortByDateDesc(local);
+  return localVehicles;
 }
 
 export async function getVehicleBySlug(slug: string): Promise<Vehicle | null> {
@@ -418,7 +444,7 @@ export async function saveVehicle(vehicle: Vehicle): Promise<boolean> {
     if (idx >= 0) {
       current[idx] = vehicle;
     } else {
-      current.push(vehicle);
+      current.unshift(vehicle);
     }
     saveStoredItems(VEHICLES_STORAGE_KEY, current, 'ne_dhanya_vehicles_updated');
     localVehicles = current;
@@ -444,17 +470,18 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
       const snap = await getDocs(collection(db, 'blogs'));
       if (!snap.empty) {
         const firestoreData = snap.docs.map(d => ({ id: d.id, ...d.data() } as BlogPost));
-        setSilentStorage(BLOGS_STORAGE_KEY, firestoreData);
-        localBlogs = firestoreData;
-        return firestoreData;
+        const sorted = sortByDateDesc(firestoreData);
+        setSilentStorage(BLOGS_STORAGE_KEY, sorted);
+        localBlogs = sorted;
+        return sorted;
       }
     } catch (e) {
       console.warn("Failed fetching blogs from Firestore, using fallback", e);
     }
   }
   const local = getStoredItems<BlogPost>(BLOGS_STORAGE_KEY, initialBlogPosts);
-  localBlogs = local;
-  return local;
+  localBlogs = sortByDateDesc(local);
+  return localBlogs;
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
@@ -586,9 +613,10 @@ export async function getAllReviews(): Promise<Review[]> {
           })
           .filter(r => r && (r.name || r.review));
 
-        setSilentStorage(REVIEWS_STORAGE_KEY, firestoreReviews);
-        localReviews = firestoreReviews;
-        return firestoreReviews;
+        const sorted = sortByDateDesc(firestoreReviews);
+        setSilentStorage(REVIEWS_STORAGE_KEY, sorted);
+        localReviews = sorted;
+        return sorted;
       }
     } catch (e) {
       console.warn("Failed fetching reviews from Firestore, using persistent local fallback", e);
@@ -596,8 +624,8 @@ export async function getAllReviews(): Promise<Review[]> {
   }
 
   const local = getStoredLocalReviews();
-  localReviews = local;
-  return local;
+  localReviews = sortByDateDesc(local);
+  return localReviews;
 }
 
 export async function getApprovedReviews(): Promise<Review[]> {

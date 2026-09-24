@@ -5,13 +5,9 @@ import { doc, deleteDoc } from 'firebase/firestore';
 import { revalidatePath } from 'next/cache';
 
 async function ensureServerAuth() {
-  if (!auth) return;
+  if (!auth) throw new Error("Firebase Auth is not initialized on server");
   if (!auth.currentUser) {
-    try {
-      await signInWithEmailAndPassword(auth, "admin@nedhanyatours.com", "Admin@123456");
-    } catch (e: any) {
-      console.warn("Server auth sign in warning:", e?.message);
-    }
+    await signInWithEmailAndPassword(auth, "admin@nedhanyatours.com", "Admin@123456");
   }
 }
 
