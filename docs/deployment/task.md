@@ -72,15 +72,20 @@ Verify that the server has Node.js (v18+ or v20+), npm, and Nginx ready:
   ```bash
   cd /var/www/nedhanyatourandtravels.in
 
+  # (Option A: Copy from example and edit)
+  cp .env.example .env.production
+  nano .env.production
+
+  # (Option B: Or create directly using your actual credentials)
   cat << 'EOF' > .env.production
   # Firebase Client Config
-  NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyBIsMp4HufIquNJ0cpY38KQHOf_o4BPfXY
-  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=ne-dhaniya-tour-nd-travels.firebaseapp.com
-  NEXT_PUBLIC_FIREBASE_PROJECT_ID=ne-dhaniya-tour-nd-travels
-  NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=ne-dhaniya-tour-nd-travels.firebasestorage.app
-  NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=403822097078
-  NEXT_PUBLIC_FIREBASE_APP_ID=1:403822097078:web:7a5bac63817e2720c96c17
-  NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-4Z2FQ78BBX
+  NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key_here
+  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+  NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+  NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+  NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+  NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+  NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-XXXXXXXXXX
 
   # Business Details & Site Config
   NEXT_PUBLIC_SITE_URL=https://nedhanyatourandtravels.in
@@ -90,10 +95,10 @@ Verify that the server has Node.js (v18+ or v20+), npm, and Nginx ready:
   NEXT_PUBLIC_EMAIL=munin.ghy123@gmail.com
 
   # Cloudinary Configuration
-  CLOUDINARY_CLOUD_NAME=bpi3s64e
-  CLOUDINARY_API_KEY=223898674186319
-  CLOUDINARY_API_SECRET=5a-GEF8ujc8zLzR_o0FtoNWt8ho
-  NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=bpi3s64e
+  CLOUDINARY_CLOUD_NAME=your_cloud_name
+  CLOUDINARY_API_KEY=your_api_key
+  CLOUDINARY_API_SECRET=your_api_secret
+  NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
   EOF
   ```
 
