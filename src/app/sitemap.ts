@@ -9,7 +9,7 @@ import {
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nedhaniyatours.com';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nedhanyatourandtravels.in';
 
   const [destinations, places, packages, blogs] = await Promise.all([
     getAllDestinations(),

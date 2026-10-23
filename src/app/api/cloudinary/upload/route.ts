@@ -96,3 +96,11 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export async function GET() {
+  return NextResponse.json({
+    status: "online",
+    service: "Cloudinary Upload API",
+    message: "Endpoint is active. Send a POST request with 'file' or 'image' in FormData to upload.",
+  });
+}
